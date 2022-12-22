@@ -1,0 +1,123 @@
+﻿@model ReservationVM
+
+@{
+    Layout = "_InnerLayout";
+}
+
+<div class="card shadow-lg">
+    <h5 class="card-header">Setup new room</h5>
+    <div class="card-body">
+        <form asp-action="CreateReservation" asp-controller="Reservation" enctype="multipart/form-data">
+
+            <div class="form-group row pb-3">
+                <div class="col-sm-3">
+                    <label asp-for="@Model.Name" class="col-form-label"></label>
+                </div>
+                <div class="col-sm-9">
+                    <input asp-for="@Model.Name" class="form-control" />
+                    <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row pb-3">
+                <div class="col-sm-3">
+                    <label asp-for="@Model.Content" class="col-form-label"></label>
+                </div>
+                <div class="col-sm-9">
+                    <input asp-for="@Model.Content" class="form-control" />
+                    <span asp-validation-for="@Model.Content" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row pb-3">
+                <div class="col-sm-3">
+                    <label asp-for="@Model.Price" class="col-form-label"></label>
+                </div>
+                <div class="col-sm-9">
+                    <input asp-for="@Model.Price" class="form-control" />
+                    <span asp-validation-for="@Model.Price" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row pb-3">
+                <div class="col-sm-3">
+                    <label asp-for="@Model.RoomCount" class="col-form-label"></label>
+                </div>
+                <div class="col-sm-9">
+                    <input asp-for="@Model.RoomCount" class="form-control" />
+                    <span asp-validation-for="@Model.RoomCount" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row pb-3">
+                <div class="col-sm-3">
+                    <label asp-for="@Model.Image" class="col-form-label"></label>
+                </div>
+                <div class="col-sm-9">
+                    <div class="custom-file">
+                        <input asp-for="@Model.Image" class="form-control custom-file-input" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="@Model.SmokingAllowed" class="col-form-label"></label>
+                </div>
+                <div class="col-sm-9">
+                    @*<input asp-for="Employee.Salary" class="form-control" />*@
+                    <select asp-for="@Model.SmokingAllowed" asp-items="@(new SelectList(Model.AllowSmoking, "SmokingStatus", "SmokingStatus"))"
+                            class="form-control">
+                        <option selected disabled>Select Smoking</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="@Model.ButlerServiceAvailable" class="col-form-label"></label>
+                </div>
+                <div class="col-sm-9">
+                    @*<input asp-for="Employee.Salary" class="form-control" />*@
+                    <select asp-for="@Model.ButlerServiceAvailable" asp-items="@(new SelectList(Model.ButlerServices, "ButlerServiceAv", "ButlerServiceAv"))"
+                            class="form-control">
+                        <option selected disabled>Select Butler Service</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="@Model.AirConditioning" class="col-form-label"></label>
+                </div>
+                <div class="col-sm-9">
+                    @*<input asp-for="Employee.Salary" class="form-control" />*@
+                    <select asp-for="@Model.AirConditioning" asp-items="@(new SelectList(Model.AirConditions, "AirConditioningAv", "AirConditioningAv"))"
+                            class="form-control">
+                        <option selected disabled>Select AirConditioning</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row pb-3 pt-3">
+                <div class="col-sm-12">
+                    <div class="custom-file">
+                        <button type="submit" class="btn btn-success float-end">Submit</button>
+                    </div>
+                </div>
+            </div>
+
+            @section Script{
+                @*CODE FOR UPLOAD SINGLE FILE TO WWWROOT/IMAGES FOLDER ON THE SERVER*@
+                <script>
+                    $(document).ready(function () {
+                        $('.custom-file-input').on("change", function () {
+                            var fileName = $(this).val().split("\\").pop();
+                            $(this).next('.custom-file-label').html(fileName);
+                        });
+                    });
+                </script>
+            }
+            </form>
+        </div>
+    </div>

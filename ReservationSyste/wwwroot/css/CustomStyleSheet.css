@@ -1,0 +1,32 @@
+﻿.headingDetails{
+    background-color:darkred;
+}
+
+
+.RoyalPalaceImage {
+    width: 300px;
+    padding: 2px;
+    height: 200px;
+}
+#homepageImage {
+    width: 1264px;
+}
+
+/*.mainCard {
+    border: solid 1px #ff006e;*/
+    /*border: solid 1px #ff006e;*/
+    /*margin-top: 3.5rem !important;*/
+    /*box-shadow: 2px 5px 4px 3px #222;
+}*/
+
+.mainCard {
+    background: white;
+    padding: 3px 2px;
+    box-shadow: 1px 5px 10px #222;
+    margin-bottom: 50px;
+    border: solid 1px #ff6a00;
+}
+
+.layoutBody{
+    background-color:gainsboro ;
+}

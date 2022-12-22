@@ -1,0 +1,100 @@
+﻿@model EditReservationVM
+
+@{
+    ViewBag.Title = "Edit Employee";
+}
+<div class="row">
+    <div class="col-sm-3">
+        <img src="~/Images/@Model.ImageUrl" class="RoyalPalaceImage" asp-append-version="true" />
+    </div>
+
+    <div class="col-sm-9">
+        
+
+        <form enctype="multipart/form-data" asp-controller="Reservation" asp-action="EditReservation" method="post" class="m-3">
+            <input hidden asp-for="Id" />
+            <input hidden asp-for="ImageUrl" />
+            <input hidden asp-for="ReservationStatus" />
+
+            <div class="form-group row pt-3">
+                <label asp-for="Name" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <input asp-for="Name" class="form-control" placeholder="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row pt-3">
+                <label asp-for="Content" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <input asp-for="Content" class="form-control" placeholder="Email" />
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row pt-3">
+                <label asp-for="Price" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <input asp-for="Price" class="form-control" placeholder="Email" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row pt-3">
+                <label asp-for="RoomCount" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <input asp-for="RoomCount" class="form-control" placeholder="Email" />
+                    <span asp-validation-for="RoomCount" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row pt-3">
+                <label asp-for="SmokingAllowed" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <input asp-for="SmokingAllowed" class="form-control" placeholder="Email" />
+                    <span asp-validation-for="SmokingAllowed" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row pt-3">
+                <label asp-for="ButlerServerAvailable" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <input asp-for="ButlerServerAvailable" class="form-control" placeholder="Email" />
+                    <span asp-validation-for="ButlerServerAvailable" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row pt-3">
+                <label asp-for="AirConditioning" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <input asp-for="AirConditioning" class="form-control" placeholder="Email" />
+                    <span asp-validation-for="AirConditioning" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row pt-3">
+                <label asp-for="Image" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <div class="custom-file">
+                        <input multiple asp-for="Image" class="form-control custom-file-input" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row pt-3">
+                <div class="col-sm-12">
+                    <div class="custom-file">
+                        <button type="submit" class=" btn btn-secondary pr-2" style="float: right;">Update</button>
+                    </div>
+                </div>
+            </div>
+            
+
+            @section Script{
+                <script>
+                    $(document).ready(function () {
+                        $('.custom-file-input').on("change", function () {
+                            var fileName = $(this).val().split("\\").pop();
+                            $(this).next('.custom-file-label').html(fileName);
+                        });
+                    });
+                </script>
+            }
+            </form>
+        </div>
+    </div>

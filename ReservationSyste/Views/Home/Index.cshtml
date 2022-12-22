@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Reservation>
+
+@foreach (var reservation in Model)
+{
+    <div class="mainCard  row no-gutters" id="">
+        <div class="col-md-4 pt-2 pb-2">
+            <img src="~/Images/@reservation.ImageUrl" class="RoyalPalaceImage" />
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">@reservation.Name</h5>
+                <p class="card-text">@reservation.Content</p>
+                <p class="card-text">
+                    <small class="text-smoke"> <i class="fa-solid fa-smoking"></i>    @reservation.SmokingAllowed</small>
+                    <small class="text-butler">  <i class="fa-solid fa-smoking"></i>  @reservation.ButlerServerAvailable</small>
+                    <small class="text-airCondiction"> <i class="fa-solid fa-joint"></i> @reservation.AirConditioning</small>
+                </p>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-6 priceRoomsLeft">
+                    <small class="">
+                        @reservation.RoomCount <span class="roomsLeft"> Rooms left</span>
+                    </small>
+                </div>
+                <div class="col-sm-4">
+                    @reservation.Price / <span class="pricePerNight">night</span>
+                </div>
+                <div class="col-sm-2 ">
+                    <a asp-action="BookingDetail" asp-controller="Home" asp-route-Id="@reservation.Id" style="width:auto; float-right" class="btn btn-secondary float-right">
+                        Book now
+                    </a>
+                    @*<small>
+                        <a asp-action="EditReservation" asp-controller="Reservation" asp-route-id="@reservation.Id" style="fond-size: 10px">alter</a>
+                    </small>*@
+                </div>
+            </div>
+        </div>
+    </div>
+}
