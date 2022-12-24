@@ -1,0 +1,42 @@
+﻿<div class="card shadow-lg">
+    <input type="hidden" asp-for="@Model.Id"/>
+    <div class="modal-header">
+                    <h4 style=" color:darkblue">Set your checkout day</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+      </div>
+    <div class="content">
+        <img src="~/Images/@Model.ImagePath" alt="Image" height="150px" width="400px" style="margin-left:30px"/>
+    </div>
+    <div class="card-body">
+        <div class="row pt-3">
+            <div class="col-md-4">
+                Check out Date
+            </div>
+            <div class="col-md-8">
+                <input type="text" class="form-control" data-toggle="datepicker">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-secondary" asp-action="UserProfile" asp-controller="Reservation" asp-route-Id="@Model.Id">Save</a>
+        @*<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>*@
+    </div>
+    </div>
+
+
+    
+@section script {
+
+    <script>
+        jQuery(function () {
+            jQuery('[data-toggle="datepicker"]').datepicker({
+                autoHide: true,
+                zIndex: 2048,
+            });
+        });
+
+    </script>
+}
+               

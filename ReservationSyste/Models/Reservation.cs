@@ -1,4 +1,6 @@
-﻿namespace ReservationSyste.Models
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace ReservationSyste.Models
 {
     public class Reservation
     {
@@ -18,4 +20,20 @@
         public string? ImageUrl { get; set; }
         public int ReservationStatus { get; set; }
     }
+
+
+    public class ReservationModel
+    {
+        public  ReservationModel()
+        {
+            Reservations = new List<Reservation>();
+        }
+       public IEnumerable<Reservation>? Reservations { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string? SearchTerm { get; set; }
+    }
+
 }
+
+

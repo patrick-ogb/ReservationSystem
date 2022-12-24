@@ -15,6 +15,7 @@ namespace ReservationSyste.ViewModels
         
         [Required]
         public string? Name { get; set; }
+        public string? DateCreated { get; set; }
         [Required]
         public string? Content { get; set; }
         [Required]

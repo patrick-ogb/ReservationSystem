@@ -10,5 +10,6 @@ namespace ReservationSyste.Services.Interfices
         Task<Reservation> UpdateReservationAsync(Reservation reservation);
         Task<Reservation> FindReservationAsync(int Id);
         Task<CheckInOut > GetCheckInOutAsync();
+        Task<List<Reservation>> SearchReservationAsync(string searchTerm);
     }
 }

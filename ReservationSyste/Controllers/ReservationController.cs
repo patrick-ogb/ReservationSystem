@@ -11,11 +11,14 @@ namespace ReservationSyste.Controllers
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IReservationService _reservationService;
+        private readonly IHttpContextAccessor _httpContext;
 
-        public ReservationController(IWebHostEnvironment webHostEnvironment, IReservationService reservationService)
+        public ReservationController(IWebHostEnvironment webHostEnvironment, 
+            IReservationService reservationService, IHttpContextAccessor httpContext)
         {
             _webHostEnvironment = webHostEnvironment;
             _reservationService = reservationService;
+            _httpContext = httpContext;
         }
 
         public IActionResult CreateReservation()
@@ -145,6 +148,15 @@ namespace ReservationSyste.Controllers
 
             return uniqueFileName;
         }
+
+        public  IActionResult PersonalProfile(DateClass model)
+        {
+            ViewBag.Email = model.Email;
+            ViewBag.Id = model.Id;
+            return View();
+        }
+
+
     }
 
 }
@@ -152,5 +164,5 @@ namespace ReservationSyste.Controllers
 
 public class EditReservationVM : Reservation
 {
-    public IFormFile? Image { get; set; }
+    public IFormFile Image { get; set; }
 }

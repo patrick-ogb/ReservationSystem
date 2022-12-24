@@ -31,6 +31,16 @@ namespace ReservationSyste.Services.Repository
             return await _context.Reservations.ToListAsync();
         }
 
+
+        public async  Task<List<Reservation>> SearchReservationAsync(string searchTerm)
+        {
+            var result = await ( _context.Reservations.Where(x => x.Name.Contains(searchTerm)
+              || x.Content.Contains(searchTerm) || x.RoomText.Contains(searchTerm))).ToListAsync();
+
+            return result;
+        }
+
+
         public async Task<Reservation> UpdateReservationAsync(Reservation model)
         {
             var reservation = _context.Reservations.Attach(model);

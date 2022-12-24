@@ -1,0 +1,56 @@
+﻿@model Reservation
+
+<div class="mainCard  row no-gutters" id="">
+    <div class="col-md-4 pt-2 pb-2">
+        <img src="~/Images/@Model.ImageUrl" class="RoyalPalaceImage" />
+    </div>
+    <div class="col-md-8">
+        <div class="card-body">
+            <div class="card-title">
+                <div class="row">
+                    <div class="col-sm-11">
+                        @Model.Name
+                    </div>
+                    <div class="col-sm-1">
+                        <a asp-action="EditReservation" asp-controller="Reservation" asp-route-Id="@Model.Id" class="float-end">... </a>
+                    </div>
+                </div>
+            </div>
+            <p class="card-text">@Model.Content</p>
+            <p class="card-text">
+                <small class="text-smoke"> <i class="fa-solid fa-smoking"></i>    @Model.SmokingAllowed</small>
+                <small class="text-butler">  <i class="fa-solid fa-smoking"></i>  @Model.ButlerServerAvailable</small>
+                <small class="text-airCondiction"> <i class="fa-solid fa-joint"></i> @Model.AirConditioning</small>
+            </p>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-6 priceRoomsLeft">
+                <small class="">
+                    @Model.RoomCount <span class="roomsLeft"> Rooms left</span>
+                </small>
+            </div>
+            <div class="col-sm-3">
+                @Model.Price / <span class="pricePerNight">night</span>
+            </div>
+            <div class="col-sm-3 ">
+                <button class="btn btn-secondary float-end" onclick="funCheckInOut(@Model.Id, '@Model.ImageUrl')">
+                    Book now
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*
+@section Script{
+    <script>
+        var SaveRoomIdToSession = function(roomId){
+            context.HttpContext.Session.SetInt32("sessionRoomId", Model.Id);
+        }
+        $(document).ready(function () {
+
+        });
+    </script>
+                            }*@
