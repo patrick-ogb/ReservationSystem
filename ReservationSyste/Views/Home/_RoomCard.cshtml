@@ -34,23 +34,11 @@
                 @Model.Price / <span class="pricePerNight">night</span>
             </div>
             <div class="col-sm-3 ">
-                <button class="btn btn-secondary float-end" onclick="funCheckInOut(@Model.Id, '@Model.ImageUrl')">
+                <button class="btn btn-secondary float-end" onclick="funCheckInOut(@Model.Id, '@Model.ImageUrl', '@Model.Name', @Model.Price, @Model.RoomCount)">
                     Book now
                 </button>
+
             </div>
         </div>
     </div>
 </div>
-
-
-@*
-@section Script{
-    <script>
-        var SaveRoomIdToSession = function(roomId){
-            context.HttpContext.Session.SetInt32("sessionRoomId", Model.Id);
-        }
-        $(document).ready(function () {
-
-        });
-    </script>
-                            }*@

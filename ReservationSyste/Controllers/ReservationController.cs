@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ReservationSyste.Enums;
 using ReservationSyste.Models;
 using ReservationSyste.Services.Interfices;
+using ReservationSyste.Utility;
 using ReservationSyste.ViewModels;
 
 namespace ReservationSyste.Controllers
@@ -151,8 +152,17 @@ namespace ReservationSyste.Controllers
 
         public  IActionResult PersonalProfile(DateClass model)
         {
-            ViewBag.Email = model.Email;
+            if (model.DateCheckOut is null || model.Email is null)
+                return RedirectToAction("Index", "Home");
+
             ViewBag.Id = model.Id;
+            ViewBag.Price = model.Price;
+            ViewBag.Email = model.Email;
+            ViewBag.ImagePath = model.ImagePath;
+            ViewBag.RoomName = model.RoomName;
+            ViewBag.DateCheckOut = model.DateCheckOut;
+            ViewBag.RoomCount = model.RoomCount;
+            ViewBag.MonthName = Convert.ToDateTime(model.DateCheckOut).ToMonthName();
             return View();
         }
 

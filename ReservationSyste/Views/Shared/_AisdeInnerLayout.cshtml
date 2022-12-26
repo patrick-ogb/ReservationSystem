@@ -1,9 +1,58 @@
-﻿
+﻿@model DateTimeVM
+
+@{
+    var CkOut = Convert.ToDateTime(Model.DateCheckOut);
+    var CkIn = DateTime.Now;
+    var days = (CkOut - CkIn).Days;
+
+}
+
 <div class="card shadow-lg">
     <h5 class="card-header">
-        <img src="~/StaticImages/IMG_20220807_191312.jpg" alt="Image" height="100px" width="230px"/>
+        <img src="~/Images/@Model.ImagePath" height="200" width="320" class="pt-3" />
     </h5>
     <div class="card-body">
-        <p>This is side content of the inner layout page</p>
+        <div class="content">
+            <div class="row">
+                <h6>
+                    Check in:
+                </h6>
+                <small>
+                    @CkIn.DayOfWeek, @Model.MonthName, @CkIn.Day, @CkIn.Year from
+                    @string.Format("{0:hh:mm tt}", DateTime.Now)
+                </small>
+            </div>
+            <div class="row pt-3">
+                <h6>
+                    Check out:
+                </h6>
+                <small>
+                    @CkOut.DayOfWeek, @Model.MonthName, @CkOut.Day, @CkOut.Year from
+                    @string.Format("{0:hh:mm tt}", DateTime.Now)
+                </small>
+            </div>
+            <div class="row pt-3">
+                <h6>
+                    Total length of stay:
+                </h6>
+                <small>
+                    @days Night
+                </small>
+            </div>
+            <div class="row pt-3">
+                <a asp-action="">Chnage date</a>
+            </div>
+            <div class="row pt-3">
+                <h6>
+                   Room type:
+                </h6>
+                <small>
+                    @Model.RoomName
+                </small>
+            </div>
+            <div class="row pt-3">
+                <a asp-action="">Change your selection</a>
+            </div>
+        </div>
     </div>
 </div>
