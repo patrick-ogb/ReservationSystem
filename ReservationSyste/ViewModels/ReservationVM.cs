@@ -14,10 +14,10 @@ namespace ReservationSyste.ViewModels
         public int Id { get; set; }
         
         [Required]
-        public string? Name { get; set; }
-        public string? DateCreated { get; set; }
+        public string Name { get; set; }
+        public string DateCreated { get; set; }
         [Required]
-        public string? Content { get; set; }
+        public string Content { get; set; }
         [Required]
         public double Price { get; set; }
         [Required]
@@ -26,21 +26,21 @@ namespace ReservationSyste.ViewModels
         
         [Required]
         [DisplayName("Room photo")]
-        public IFormFile? Image { get; set; }
-        public string? ImageUrl { get; set; }
+        public IFormFile Image { get; set; }
+        public string ImageUrl { get; set; }
 
         [Required]
         [DisplayName("Smoking Allowed")]
-        public string? SmokingAllowed { get; set; }
+        public string SmokingAllowed { get; set; }
         public List<AllowSmoking> AllowSmoking { get; set; }
         [Required]
         [DisplayName("Butller Services Available")]
-        public string? ButlerServiceAvailable { get; set; }
+        public string ButlerServiceAvailable { get; set; }
         public List<ButlerService> ButlerServices { get; set; }
 
         [Required]
         [DisplayName("Air Conditioning")]
-        public string? AirConditioning { get; set; }
+        public string AirConditioning { get; set; }
         public List<AirCondition> AirConditions { get; set; }
     }
 
@@ -50,7 +50,7 @@ namespace ReservationSyste.ViewModels
     public class AllowSmoking
     {
         public int Id { get; set; }
-        public string? SmokingStatus { get; set; }
+        public string SmokingStatus { get; set; }
 
         public static List<AllowSmoking> GetAllowSmokings()
         {
@@ -65,7 +65,7 @@ namespace ReservationSyste.ViewModels
 
     public class ButlerService
     {
-        public string? ButlerServiceAv { get; set; }
+        public string ButlerServiceAv { get; set; }
 
         public static List<ButlerService> GetButlerServices()
         {
@@ -80,7 +80,7 @@ namespace ReservationSyste.ViewModels
 
     public class AirCondition
     {
-        public string? AirConditioningAv { get; set; }
+        public string AirConditioningAv { get; set; }
         
         public static List<AirCondition> GetAirConditions()
         {

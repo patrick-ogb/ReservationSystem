@@ -34,10 +34,13 @@ namespace ReservationSyste.Services.Repository
 
         public async  Task<List<Reservation>> SearchReservationAsync(string searchTerm)
         {
-            var result = await ( _context.Reservations.Where(x => x.Name.Contains(searchTerm)
-              || x.Content.Contains(searchTerm) || x.RoomText.Contains(searchTerm))).ToListAsync();
+            var reservatn = await (from reservation in _context.Reservations
+                                where reservation.Name.Contains(searchTerm.Trim())
+                                || reservation.RoomText.Contains(searchTerm.Trim())
+                                || reservation.Content.Contains(searchTerm.Trim())
+                                select reservation).ToListAsync();
 
-            return result;
+            return reservatn;
         }
 
 

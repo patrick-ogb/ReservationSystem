@@ -3,6 +3,7 @@ using ReservationSyste.Models;
 using ReservationSyste.Services.Interfices;
 using ReservationSyste.ViewModels;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace ReservationSyste.Controllers
 {
@@ -20,7 +21,7 @@ namespace ReservationSyste.Controllers
             _httpContext = httpContext;
         }
 
-        public async Task<IActionResult> Index(string? SearchTerm = null)
+        public async Task<IActionResult> Index(string SearchTerm = null)
         {
             List<Reservation> reservations;
             if(SearchTerm != null)
@@ -32,12 +33,13 @@ namespace ReservationSyste.Controllers
                 reservations = await _reservationService.GetAllReservationAsync();
             }
 
-            ReservationModel rservation = new ReservationModel
+            ReservationModel rservationVM = new ReservationModel
             {
                 Reservations = reservations,
             };
-
-            return View(rservation);
+            ViewBag.ReservationVM = rservationVM;
+            DateClass dateClass = new DateClass();
+            return View(dateClass);
         }
 
 
@@ -60,6 +62,21 @@ namespace ReservationSyste.Controllers
             };
 
             return PartialView("_CheckInOut", dateClass);
+        }
+
+        public JsonResult CheckInOutJSon(int ReservationId, string ImageUrl)
+        {
+
+            DateClass dateClass = new DateClass
+            {
+                Id = ReservationId.ToString(),
+                ImagePath = ImageUrl,
+            };
+
+            string strJson = JsonSerializer.Serialize<DateClass>(dateClass);
+            Console.WriteLine(strJson);
+
+            return Json(strJson);
         }
 
     }

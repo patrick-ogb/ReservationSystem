@@ -1,0 +1,42 @@
+﻿@model DateTimeVM
+<div class="card shadow-lg">
+    <h5 class="card-header">
+        Your price summary
+    </h5>
+    <div class="card-body">
+        <div class="content">
+            <div class="row">
+                <div class="col-md-4">
+                    @Model.RoomName
+                </div>
+                <div class="col-md-4">
+                    @Model.Price
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    Duration
+                </div>
+                <div class="col-md-4">
+                    @Model.Days
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    Room(s)
+                </div>
+                <div class="col-md-4">
+                    @Model.RoomCount
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="card-footer">
+        <div class="col-md-6">
+           Your total price:
+        </div>
+        <div class="col-md-4">
+           @(Model.Price * Model.Days)
+        </div>
+    </div>
+</div>

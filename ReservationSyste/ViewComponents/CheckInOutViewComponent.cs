@@ -14,7 +14,7 @@ namespace ReservationSyste.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-           //var result =  await _reservationService.GetCheckInOutAsync();
+           var result =  await _reservationService.GetCheckInOutAsync();
             return View();
         }
     }

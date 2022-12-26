@@ -39,4 +39,10 @@
 
     </script>
 }
+
+
+
+<button class="btn btn-secondary float-end" onclick="funCheckInOut(@Model.Id, '@Model.ImageUrl')">
+                    Book now
+                </button>
                
