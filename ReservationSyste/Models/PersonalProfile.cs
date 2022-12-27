@@ -7,7 +7,7 @@ namespace ReservationSyste.Models
     {
             public int Id { get; set; }
             [Required]
-            public string  Title { get; set; }
+            public string  Name { get; set; }
             [Required]
             [DisplayName("First Name")]
             public string  FirstName { get; set; }
@@ -18,7 +18,7 @@ namespace ReservationSyste.Models
             public string  Sex { get; set; }
             [Required]
             [DisplayName("Date Of Birth ")]
-            public DateTime DateOfBirth { get; set; }
+            public string DateOfBirth { get; set; }
             [Required]
             public string  Occupation { get; set; }
        
@@ -33,8 +33,11 @@ namespace ReservationSyste.Models
             public string  AddressLine2 { get; set; }
             [Required]
             public string  City { get; set; }
-       
-            [Required]
+
+        [Required]
+        public string State { get; set; }
+
+        [Required]
             [DisplayName("Arrival Time")]
             public DateTime ArrivalTime { get; set; }
             public string  Purpose { get; set; }

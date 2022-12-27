@@ -5,6 +5,8 @@ using ReservationSyste.Models;
 using ReservationSyste.Services.Interfices;
 using ReservationSyste.Utility;
 using ReservationSyste.ViewModels;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ReservationSyste.Controllers
 {
@@ -155,14 +157,25 @@ namespace ReservationSyste.Controllers
             if (model.DateCheckOut is null || model.Email is null)
                 return RedirectToAction("Index", "Home");
 
-            ViewBag.Id = model.Id;
-            ViewBag.Price = model.Price;
-            ViewBag.Email = model.Email;
-            ViewBag.ImagePath = model.ImagePath;
-            ViewBag.RoomName = model.RoomName;
-            ViewBag.DateCheckOut = model.DateCheckOut;
-            ViewBag.RoomCount = model.RoomCount;
-            ViewBag.MonthName = Convert.ToDateTime(model.DateCheckOut).ToMonthName();
+
+            DateTimeVM dateTimeVM = new DateTimeVM
+            {
+                Email = model.Email,
+                Id = model.Id,
+                DateCheckOut = model.DateCheckOut,
+                ImagePath = model.ImagePath,
+                MonthName = Convert.ToDateTime(model.DateCheckOut).ToMonthName(),
+                RoomName = model.RoomName,
+                Price = model.Price,
+                CheckOut = Convert.ToDateTime(model.DateCheckOut),
+                CheckIn = DateTime.Now,
+                Days = (Convert.ToDateTime(model.DateCheckOut) - DateTime.Now).Days,
+                RoomCount = (int)model.RoomCount,
+            };
+
+            var jSonObject  = JsonSerializer.Serialize<DateTimeVM>(dateTimeVM);
+
+            _httpContext.HttpContext.Session.SetString("dateTimeVM", jSonObject);
             return View();
         }
 

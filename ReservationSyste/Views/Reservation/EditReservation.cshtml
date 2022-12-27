@@ -4,19 +4,18 @@
     ViewBag.Title = "Edit Employee";
 }
 <div class="row">
-    <div class="col-sm-3">
-        <img src="~/Images/@Model.ImageUrl" class="RoyalPalaceImage" asp-append-version="true" />
+    <div class="col-sm-3 p-3 ">
+        @*<img src="~/Images/@Model.ImageUrl" class="RoyalPalaceImage" height="300" width="270" asp-append-version="true" />*@
+        <img src="~/Images/@Model.ImageUrl" height="300" width="280" class="pt-3" />
     </div>
 
-    <div class="col-sm-9">
-        
-
+    <div class="col-sm-9 pt-3">
         <form enctype="multipart/form-data" asp-controller="Reservation" asp-action="EditReservation" method="post" class="m-3">
             <input hidden asp-for="Id" />
             <input hidden asp-for="ImageUrl" />
             <input hidden asp-for="ReservationStatus" />
 
-            <div class="form-group row pt-3">
+            <div class="form-group row  ">
                 <label asp-for="Name" class="col-sm-3 col-form-label"></label>
                 <div class="col-sm-9">
                     <input asp-for="Name" class="form-control" placeholder="Name" />

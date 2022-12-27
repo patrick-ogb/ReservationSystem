@@ -6,37 +6,34 @@
     <div class="card-body">
         <div class="content">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-12">
                     @Model.RoomName
-                </div>
-                <div class="col-md-4">
-                    @Model.Price
+                    <span class="float-end">
+                        @Model.Price
+                    </span>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-12">
                     Duration
-                </div>
-                <div class="col-md-4">
-                    @Model.Days
+                    <span class="float-end">
+                        @Model.Days
+                    </span>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-12">
                     Room(s)
-                </div>
-                <div class="col-md-4">
-                    @Model.RoomCount
+                    <span class ="float-end">
+                        @Model.RoomCount
+                    </span>
                 </div>
             </div>
             </div>
         </div>
         <div class="card-footer">
-        <div class="col-md-6">
-           Your total price:
-        </div>
-        <div class="col-md-4">
-           @(Model.Price * Model.Days)
+        <div class="col-md-12">
+            Your total price:  <span class="float-end">@(Model.Price * Model.Days)</span>
         </div>
     </div>
 </div>

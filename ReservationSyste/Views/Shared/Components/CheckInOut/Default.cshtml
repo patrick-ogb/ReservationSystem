@@ -1,24 +1,58 @@
-﻿@model ReservationSyste.Models.CheckInOut
+﻿@model ReservationSyste.ViewModels.DateTimeVM
 
-<div class="col-md-12">
-    <div class="card border-secondary mb-12">
-        <div class="card-header">Your booking details</div>
-        <div class="card-body text-secondary">
-            <h4 class="card-title">Chech In: </h4>
-            <p class="card-text"></p>
+@{
+    var dateTimeVM = Model;
+}
 
-            <h4 class="card-title">Chech Out: </h4>
-            <p class="card-text"></p>
 
-            <h4 class="card-title">Total length of stay: </h4>
-            <p class="card-text"></p>
-            <a href="#" style="width:auto"> Change date</a>
 
-            <hr />
-            <h4 class="card-title">Room type: </h4>
-            <p class="card-text"></p>
-            <a href="#" style="width:auto"> Change your selection</a>
+<div class="card shadow-lg">
+    <h5 class="card-header">
+        <img src="~/Images/@Model.ImagePath" height="200" width="320" class="pt-3" />
+    </h5>
+    <div class="card-body">
+        <div class="content">
+            <div class="row">
+                <h6>
+                    Check in:
+                </h6>
+                <small>
+                    @Model.CheckIn.DayOfWeek, @Model.MonthName, @Model.CheckIn.Day, @Model.CheckIn.Year from
+                    @string.Format("{0:hh:mm tt}", DateTime.Now)
+                </small>
+            </div>
+            <div class="row pt-3">
+                <h6>
+                    Check out:
+                </h6>
+                <small>
+                    @Model.CheckOut.DayOfWeek, @Model.MonthName, @Model.CheckOut.Day, @Model.CheckOut.Year from
+                    @string.Format("{0:hh:mm tt}", Model.CheckOut)
+                </small>
+            </div>
+            <div class="row pt-3">
+                <h6>
+                    Total length of stay:
+                </h6>
+                <small>
+                    @Model.Days Night
+                </small>
+            </div>
+            <div class="row pt-3">
+                <a asp-action="">Chnage date</a>
+            </div>
+            <hr style="border:solid 1px black;" />
+            <div class="row pt-3">
+                <h6>
+                    Room type:
+                </h6>
+                <small>
+                    @Model.RoomName
+                </small>
+            </div>
+            <div class="row pt-3">
+                <a asp-action="">Change your selection</a>
+            </div>
         </div>
-
     </div>
 </div>
