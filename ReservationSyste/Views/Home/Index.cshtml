@@ -13,10 +13,16 @@
     </form>
 </div>
 
-@foreach (var reservation in reservationVM.Reservations)
-{
-    <partial name="_RoomCard" , model="reservation" />
-}
+
+<table id="ReservationtableId" class="table table-striped border">
+    <tbody>
+        @foreach (var reservation in reservationVM.Reservations)
+        {
+            <partial name="_RoomCard" , model="reservation" />
+        }
+    </tbody>
+</table>
+
 
 
 <!-- Modal -->
@@ -69,7 +75,7 @@
 
 
 @section script {
-
+    
     <script>
         //$.noConflict();
         //function funCheckInOut(reservationId, imageUrl) {
@@ -177,6 +183,11 @@
                 zIndex: 2048,
                 autoclose: true,
             });
+        });
+
+
+        jQuery(document).ready(function(){
+            jQuery("#ReservationtableId").Datatable();
         });
 
     </script>

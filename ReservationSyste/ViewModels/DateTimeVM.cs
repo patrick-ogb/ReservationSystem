@@ -8,5 +8,8 @@ namespace ReservationSyste.ViewModels
         public DateTime CheckOut { get; set; }
         public DateTime CheckIn { get; set; }
         public int Days { get; set; }
+        public string SiteKey { get; set; }
+        public string Error { get; set; }
+        public int RoomId { get; set; }
     }
 }

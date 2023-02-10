@@ -24,7 +24,7 @@ namespace ReservationSyste.Controllers
         public async Task<IActionResult> Index(string SearchTerm = null)
         {
             List<Reservation> reservations;
-            if(SearchTerm != null)
+            if (SearchTerm != null)
             {
                 reservations = await _reservationService.SearchReservationAsync(SearchTerm);
             }
@@ -33,51 +33,26 @@ namespace ReservationSyste.Controllers
                 reservations = await _reservationService.GetAllReservationAsync();
             }
 
-            ReservationModel rservationVM = new ReservationModel
-            {
-                Reservations = reservations,
-            };
-            ViewBag.ReservationVM = rservationVM;
-            DateClass dateClass = new DateClass();
-            return View(dateClass);
+            ViewBag.ReservationVM = new ReservationModel {Reservations = reservations };
+
+            return View(new DateClass());
         }
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        public IActionResult Error() => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        
 
 
         public IActionResult CheckInOut(string SessionValue)
         {
             _httpContext.HttpContext.Session.SetString("sessionRoomValue", SessionValue);
 
-            string[] sses = SessionValue.Split("!!!");
-            DateClass dateClass = new DateClass
-            {
-                Id = sses[0],
-                ImagePath = sses[1],
-            };
-
-            return PartialView("_CheckInOut", dateClass);
+            return PartialView("_CheckInOut", new DateClass { Id = SessionValue.Split("!!!")[0], ImagePath = SessionValue.Split("!!!")[1] });
         }
 
-        public JsonResult CheckInOutJSon(int ReservationId, string ImageUrl)
-        {
-
-            DateClass dateClass = new DateClass
-            {
-                Id = ReservationId.ToString(),
-                ImagePath = ImageUrl,
-            };
-
-            string strJson = JsonSerializer.Serialize<DateClass>(dateClass);
-            Console.WriteLine(strJson);
-
-            return Json(strJson);
-        }
+        public JsonResult CheckInOutJSon(int ReservationId, string ImageUrl) => Json(JsonSerializer.Serialize<DateClass>(new DateClass { Id = ReservationId.ToString(), ImagePath = ImageUrl }));
+      
 
     }
 }

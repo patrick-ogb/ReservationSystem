@@ -1,4 +1,5 @@
 ﻿using ReservationSyste.Controllers;
+using ReservationSyste.Data;
 using ReservationSyste.Models;
 
 namespace ReservationSyste.Services.Interfices
@@ -11,5 +12,10 @@ namespace ReservationSyste.Services.Interfices
         Task<Reservation> FindReservationAsync(int Id);
         Task<CheckInOut > GetCheckInOutAsync();
         Task<List<Reservation>> SearchReservationAsync(string searchTerm);
+        Task<int> CreatePersonalProfileAsync(PersonalProfile personalProfile, ApplicationDbContext context);
+        Task<int> CreatePersonalProfileRoomAsync(PersonalProfileRoom personalProfileRoom, ApplicationDbContext context);
+        Task<int> UpdateReservationStatusAsync(int roomId,  int status, ApplicationDbContext context);
+         bool VerifyEmail(string email);
+
     }
 }

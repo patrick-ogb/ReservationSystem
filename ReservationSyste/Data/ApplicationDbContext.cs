@@ -11,5 +11,7 @@ namespace ReservationSyste.Data
         }
             public DbSet<Reservation>   Reservations { get; set; }
             public DbSet<CheckInOut> CheckInOuts { get; set; }
+            public DbSet<PersonalProfile> PersonalProfiles { get; set; }
+            public DbSet<PersonalProfileRoom> PersonalProfileRooms { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model DateTimeVM
+﻿@*@model DateTimeVM
 
 @{
     var CkOut = Convert.ToDateTime(Model.DateCheckOut);
@@ -24,11 +24,11 @@
             </div>
             <div class="row pt-3">
                 <h6>
-                    Check out:
+                    Check out PERIOD:
                 </h6>
                 <small>
                     @CkOut.DayOfWeek, @Model.MonthName, @CkOut.Day, @CkOut.Year from
-                    @string.Format("{0:hh:mm tt}", DateTime.Now)
+                    @string.Format("{0:hh:mm tt}", CkIn) 
                 </small>
             </div>
             <div class="row pt-3">
@@ -56,4 +56,4 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@

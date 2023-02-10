@@ -1,160 +1,233 @@
-﻿@model PersonalProfile
+﻿@model PersonalProfileVM
 
 @{
     Layout = "_InnerLayout";
 
 }
+@{
+    var recaptchaValue = (ReservationSyste.Utility.RecaptchaOption)ViewBag.RecaptchaValue;
+    var error = (String)ViewBag.Error;
+}
 
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                Personal details
-            </div>
-            <div class="card-body">
-                <blockquote class="blockquote mb-0">
-                    <form asp-action="CreateProfile" asp-controller="Home">
 
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            Personal details
+        </div>
+        <div class="card-body">
+            <blockquote class="blockquote mb-0">
+                <form asp-action="CreatePersonalProfile" asp-controller="Reservation">
 
-                        <div class="form-group row">
-                            <div class="col-sm-3">
-                                <label asp-for="Name" class="col-form-label"></label>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label asp-for="FirstName" class="col-form-label"></label>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">FirstName</span>
+                                <input asp-for="FirstName" Occupationtype="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                             </div>
-                            <div class="col-sm-9">
-                                <input asp-for="Name" class="form-control form-control-sm" type="text" placeholder="Title" aria-label=".form-control-sm example">
-                                <span asp-validation-for="Name" class="text-danger"></span>
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label asp-for="LastName" class="col-form-label"></label>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">LastName</span>
+                                <input asp-for="LastName" Occupationtype="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                             </div>
+                            <span asp-validation-for="LastName" class="text-danger"></span>
                         </div>
 
-                        <div class="form-group row">
-                            <div class="col-sm-3">
-                                <label asp-for="FirstName" class="col-form-label"></label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input asp-for="FirstName" class="form-control form-control-sm" type="text" placeholder="First Name" aria-label=".form-control-sm example">
-                                <span asp-validation-for="FirstName" class="text-danger"></span>
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label asp-for="Sex" class="col-form-label"></label>
                         </div>
+                        <div class="col-sm-9">
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Sex</span>
+                                <input asp-for="Sex" Occupationtype="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                            </div>
+                            <span asp-validation-for="Sex" class="text-danger"></span>
+                        </div>
+                    </div>
 
-                        <div class="form-group row">
-                            <div class="col-sm-3">
-                                <label asp-for="LastName" class="col-form-label"></label>
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label asp-for="DateOfBirth" class="col-form-label"></label>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">DateOfBirth</span>
+                                <input asp-for="DateOfBirth" Occupationtype="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                             </div>
-                            <div class="col-sm-9">
-                                <input asp-for="LastName" class="form-control form-control-sm" type="text" placeholder="Last Name" aria-label=".form-control-sm example">
-                                <span asp-validation-for="LastName" class="text-danger"></span>
-                            </div>
+                        </div>
+                    </div>
 
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label asp-for="Occupation" class="col-form-label"></label>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-sm-3">
-                                <label asp-for="Sex" class="col-form-label"></label>
+                        <div class="col-sm-9  ">
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Occupation</span>
+                                <input asp-for="Occupation" Occupationtype="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                             </div>
-                            <div class="col-sm-9">
-                                <input asp-for="Sex" class="form-control form-control-sm" type="text" placeholder="Sex" aria-label=".form-control-sm example">
-                                <span asp-validation-for="Sex" class="text-danger"></span>
-                            </div>
+                            <span asp-validation-for="Occupation" class="text-danger"></span>
                         </div>
+                    </div>
 
-                        <div class="form-group row">
-                            <div class="col-sm-3">
-                                <label asp-for="DateOfBirth" class="col-form-label"></label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input asp-for="DateOfBirth" class="form-control form-control-sm" data-toggle="datepicker" type="text" placeholder="Date Of Birth" aria-label=".form-control-sm example">
-                            </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label asp-for="Phone" class="col-form-label"></label>
                         </div>
+                        <div class="col-sm-9">
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Phone</span>
+                                <input asp-for="Phone" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                            </div>
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
+                    </div>
 
-                        <div class="form-group row">
-                            <div class="col-sm-3">
-                                <label asp-for="Occupation" class="col-form-label"></label>
-                            </div>
-                            <div class="col-sm-9  ">
-                                <input asp-for="Occupation" class="form-control form-control-sm" type="text" placeholder="Occupation" aria-label=".form-control-sm example">
-                                <span asp-validation-for="Occupation" class="text-danger"></span>
-                            </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label asp-for="Email" class="col-form-label"></label>
                         </div>
+                        <div class="col-sm-9">
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Email</span>
+                                <input asp-for="Email" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                            </div>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
 
-                        <div class="form-group row">
-                            <div class="col-sm-3">
-                                <label asp-for="Phone" class="col-form-label"></label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input asp-for="Phone" class="form-control form-control-sm" type="text" placeholder="Phone" aria-label=".form-control-sm example">
-                                <span asp-validation-for="Phone" class="text-danger"></span>
-                            </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label asp-for="AddressLine1" class="col-form-label"></label>
                         </div>
+                        <div class="col-sm-9">
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">AddressLine 1</span>
+                                <input asp-for="AddressLine1" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                            </div>
+                            <span asp-validation-for="AddressLine1" class="text-danger"></span>
+                        </div>
+                    </div>
 
-                        <div class="form-group row">
-                            <div class="col-sm-3">
-                                <label asp-for="Email" class="col-form-label"></label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input asp-for="Email" class="form-control form-control-sm" type="text" placeholder="Phone" aria-label=".form-control-sm example">
-                                <span asp-validation-for="Email" class="text-danger"></span>
-                            </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label asp-for="AddressLine2" class="col-form-label"></label>
                         </div>
+                        <div class="col-sm-9">
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">AddressLine 2</span>
+                                <input asp-for="AddressLine2" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                            </div>
+                            <span asp-validation-for="AddressLine2" class="text-danger"></span>
+                        </div>
+                    </div>
 
-                        <div class="form-group row">
-                            <div class="col-sm-3">
-                                <label asp-for="AddressLine1" class="col-form-label"></label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input asp-for="AddressLine1" class="form-control form-control-sm" type="text" placeholder="Phone" aria-label=".form-control-sm example">
-                                <span asp-validation-for="AddressLine1" class="text-danger"></span>
-                            </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label asp-for="City" class="col-form-label"></label>
                         </div>
+                        <div class="col-sm-9">
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">City</span>
+                                <input asp-for="City" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                            </div>
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                    </div>
 
-                        <div class="form-group row">
-                            <div class="col-sm-3">
-                                <label asp-for="AddressLine2" class="col-form-label"></label>
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label asp-for="State" class="col-form-label"></label>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">State</span>
+                                <input asp-for="State" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                             </div>
-                            <div class="col-sm-9">
-                                <input asp-for="AddressLine2" class="form-control form-control-sm" type="text" placeholder="Phone" aria-label=".form-control-sm example">
-                                <span asp-validation-for="AddressLine2" class="text-danger"></span>
+                            <span asp-validation-for="State" class="text-danger"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row mb-3">
+                        <div class="col-sm-3">
+                            <label asp-for="AdditionalRequirement" class="col-form-label"></label>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="form-floating">
+                                <textarea asp-for="AdditionalRequirement" class="form-control" placeholder="Additional Requirements" id="floatingTextarea"></textarea>
+                                <label for="floatingTextarea"><small>Additional Requirements</small></label>
                             </div>
                         </div>
+                    </div>
+                    
+                    
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label class="custom-control-label" asp-for="SiteKey">Captcha</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="input-group mb-3">
+                                <div class="input-group-text">
+                                    <div class="g-recaptcha" data-sitekey="@recaptchaValue.SiteKey">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                        <div class="form-group row">
-                            <div class="col-sm-3">
-                                <label asp-for="City" class="col-form-label"></label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input asp-for="City" class="form-control form-control-sm" type="text" placeholder="Phone" aria-label=".form-control-sm example">
-                                <span asp-validation-for="City" class="text-danger"></span>
-                            </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label asp-for="Term" class="col-form-label"></label>
                         </div>
+                        <div class="col-sm-9">
+                            <small style="color:cornflowerblue">Read Terms and Condictions</small><br />
+                            <label asp-for="Term">
+                                <input type="checkbox" class="custom-control-input" asp-for="Term" />
+                                <small style="font-size:10px">I have read and agreed to the Booking Condictions</small>
+                            </label>
+                            <span asp-validation-for="Term" class="text-danger"></span>
+                        </div>
+                    </div>
 
-                        <div class="form-group row">
-                            <div class="col-sm-3">
-                                <label asp-for="State" class="col-form-label"></label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input asp-for="State" class="form-control form-control-sm" type="text" placeholder="Phone" aria-label=".form-control-sm example">
-                                <span asp-validation-for="State" class="text-danger"></span>
-                            </div>
-                        </div>
+                    @*<h3 class="text-danger">@error</h3> *@
+
 
                     <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-secondary float-end" />
+                        <input type="submit" value="Submit" class="btn btn-secondary float-end" />
                     </div>
-                        
-                    </form>
 
-                </blockquote>
-            </div>
+                </form>
+
+            </blockquote>
         </div>
     </div>
+</div>
 
 
 @section script {
-<script>
-    $.noConflict();
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script>
+        $.noConflict();
         jQuery(function () {
             $('[data-toggle="datepicker"]').datepicker({
                 autoclose: true,
             });
         });
-</script>
+    </script>
 }
 
