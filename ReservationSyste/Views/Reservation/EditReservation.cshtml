@@ -1,15 +1,19 @@
 ﻿@model EditReservationVM
 
 @{
+    Layout = "_AdminLte";
+}
+
+@{
     ViewBag.Title = "Edit Employee";
 }
 <div class="row">
-    <div class="col-sm-3 p-3 ">
+    <div class="col-sm-4 p-3 ">
         @*<img src="~/Images/@Model.ImageUrl" class="RoyalPalaceImage" height="300" width="270" asp-append-version="true" />*@
-        <img src="~/Images/@Model.ImageUrl" height="300" width="280" class="pt-3" />
+        <img src="~/Images/@Model.ImageUrl" height="300" width="300" class="pt-3 pl-3" />
     </div>
-
-    <div class="col-sm-9 pt-3">
+    
+    <div class="col-sm-8 pt-3 pr-3">
         <form enctype="multipart/form-data" asp-controller="Reservation" asp-action="EditReservation" method="post" class="m-3">
             <input hidden asp-for="Id" />
             <input hidden asp-for="ImageUrl" />
@@ -17,28 +21,28 @@
 
             <div class="form-group row  ">
                 <label asp-for="Name" class="col-sm-3 col-form-label"></label>
-                <div class="col-sm-9">
+                <div class="col-sm-9 pl-3 pr-3">
                     <input asp-for="Name" class="form-control" placeholder="Name" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row pt-3">
                 <label asp-for="Content" class="col-sm-3 col-form-label"></label>
-                <div class="col-sm-9">
+                <div class="col-sm-9 pl-3 pr-3">
                     <input asp-for="Content" class="form-control" placeholder="Email" />
                     <span asp-validation-for="Content" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row pt-3">
                 <label asp-for="Price" class="col-sm-3 col-form-label"></label>
-                <div class="col-sm-9">
+                <div class="col-sm-9 pl-3 pr-3">
                     <input asp-for="Price" class="form-control" placeholder="Email" />
                     <span asp-validation-for="Price" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row pt-3">
                 <label asp-for="RoomCount" class="col-sm-3 col-form-label"></label>
-                <div class="col-sm-9">
+                <div class="col-sm-9 pl-3 pr-3">
                     <input asp-for="RoomCount" class="form-control" placeholder="Email" />
                     <span asp-validation-for="RoomCount" class="text-danger"></span>
                 </div>
@@ -46,21 +50,21 @@
 
             <div class="form-group row pt-3">
                 <label asp-for="SmokingAllowed" class="col-sm-3 col-form-label"></label>
-                <div class="col-sm-9">
+                <div class="col-sm-9 pl-3 pr-3">
                     <input asp-for="SmokingAllowed" class="form-control" placeholder="Email" />
                     <span asp-validation-for="SmokingAllowed" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row pt-3">
                 <label asp-for="ButlerServerAvailable" class="col-sm-3 col-form-label"></label>
-                <div class="col-sm-9">
+                <div class="col-sm-9 pl-3 pr-3">
                     <input asp-for="ButlerServerAvailable" class="form-control" placeholder="Email" />
                     <span asp-validation-for="ButlerServerAvailable" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row pt-3">
                 <label asp-for="AirConditioning" class="col-sm-3 col-form-label"></label>
-                <div class="col-sm-9">
+                <div class="col-sm-9 pl-3 pr-3">
                     <input asp-for="AirConditioning" class="form-control" placeholder="Email" />
                     <span asp-validation-for="AirConditioning" class="text-danger"></span>
                 </div>
@@ -68,17 +72,17 @@
 
             <div class="form-group row pt-3">
                 <label asp-for="Image" class="col-sm-3 col-form-label"></label>
-                <div class="col-sm-9">
+                <div class="col-sm-9 pl-3 pr-3">
                     <div class="custom-file">
-                        <input multiple asp-for="Image" class="form-control custom-file-input" />
+                        <input multiple asp-for="Image" class="form-control custom-file-input" style="opacity: 10;" />
                     </div>
                 </div>
             </div>
 
-            <div class="form-group row pt-3">
+            <div class="form-group row pt-1">
                 <div class="col-sm-12">
-                    <div class="custom-file">
-                        <button type="submit" class=" btn btn-secondary pr-2" style="float: right;">Update</button>
+                    <div class="custom-file pr-3">
+                        <button type="submit" class=" btn btn-secondary pr-5" style="float: right;">Update</button>
                     </div>
                 </div>
             </div>
