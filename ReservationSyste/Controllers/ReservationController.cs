@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using PayStack.Net;
 using ReservationSyste.Data;
 using ReservationSyste.Enums;
 using ReservationSyste.Helper;
@@ -9,11 +10,10 @@ using ReservationSyste.Services.Interfices;
 using ReservationSyste.Utility;
 using ReservationSyste.ViewModels;
 using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
 
 namespace ReservationSyste.Controllers
 {
+
     public class ReservationController : Controller
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -22,9 +22,13 @@ namespace ReservationSyste.Controllers
         private readonly ApplicationDbContext _dbContext;
         private readonly RecaptchaOption _option;
         private readonly RecaptchaHelper _helper;
+        private readonly string token;
+        //private readonly IConfiguration _configuration;
+        private PayStackApi Paystack { get; set; }
+
         public ReservationController(IWebHostEnvironment webHostEnvironment, 
             IReservationService reservationService, IHttpContextAccessor httpContext,
-            IOptions<RecaptchaOption> option, ApplicationDbContext dbContext)
+            IOptions<RecaptchaOption> option, ApplicationDbContext dbContext, IConfiguration configuration)
         {
             _webHostEnvironment = webHostEnvironment;
             _reservationService = reservationService;
@@ -32,8 +36,17 @@ namespace ReservationSyste.Controllers
             _dbContext = dbContext;
             _option = option.Value;
             _helper = new RecaptchaHelper(option);
-
+            token = configuration["Payment:PaystackSK"];
+            //token = configuration.GetSection("Payment")["PaystackSK"];
+            Paystack = new PayStackApi(token);
         }
+
+        //private ReservationController(){}
+        //public ReservationController InstanceOfReservationController()
+        //{
+        //    return new ReservationController();
+        //}
+
 
         public IActionResult CreateReservation() =>
                  View(new ReservationVM{ AllowSmoking = AllowSmoking.GetAllowSmokings(), ButlerServices = ButlerService.GetButlerServices(), AirConditions = AirCondition.GetAirConditions(), });
@@ -156,16 +169,39 @@ namespace ReservationSyste.Controllers
             return uniqueFileName;
         }
 
-        public IActionResult PersonalProfile(DateClass model)
+
+         
+        public async Task<ActionResult> PersonalProfile(DateClass model)
         {
+            bool DecisionParam = false;
+
+            if(model.ActionNane == "CreatePersonalProfile" )
+            {
+                DecisionParam = true;
+                ViewBag.DecisionParam = DecisionParam;
+
+                var jSonObj = _httpContext.HttpContext.Session.GetString("dateTimeVM");
+                var dataTimeVM = JsonSerializer.Deserialize<DateTimeVM>(jSonObj);
+                var user = await _reservationService.GetUserName(model.Email);
+                BigProfileVM bigProfileVM2 = new BigProfileVM
+                {
+                    PaymentOption = new PaymentOption
+                    {
+                        PaymentOptionId = dataTimeVM.Id,
+                        Email = model.Email,
+                        Name = $"{user.FirstName} {user.LastName}" ,
+                        Amount = Convert.ToDecimal(dataTimeVM.Price * dataTimeVM.TatalAmount)
+                    }
+                };
+
+                return View(bigProfileVM2);
+            }
+
             if (model.DateCheckOut is null || model.Email is null)
                 return RedirectToAction("Index", "Home");
 
             if (_reservationService.VerifyEmail(model.Email))
-            {
-                //Code to book room
-                return PartialView("_PaymentPartialView");
-            }
+                    DecisionParam = true;
 
             DateTimeVM dateTimeVM = new DateTimeVM();
                 dateTimeVM.Email = model.Email;
@@ -180,22 +216,44 @@ namespace ReservationSyste.Controllers
                 dateTimeVM.Days = (Convert.ToDateTime(model.DateCheckOut) - DateTime.Now).Days;
                 dateTimeVM.RoomCount = (int)model.RoomCount;
                 dateTimeVM.SiteKey = _option.SiteKey;
+                dateTimeVM.TatalAmount = (model.Price * ((Convert.ToDateTime(model.DateCheckOut) - DateTime.Now).Days));
                 ViewBag.Error = "Commence Captcha";
                 ViewBag.RecaptchaValue = _option;
+                ViewBag.DecisionParam = DecisionParam;
+                ViewBag.Datetimevm = dateTimeVM;
 
 
             var jSonObject  = JsonSerializer.Serialize<DateTimeVM>(dateTimeVM);
-
             _httpContext.HttpContext.Session.SetString("dateTimeVM", jSonObject);
-            return View();
+
+            BigProfileVM bigProfileVM = new BigProfileVM();
+            bigProfileVM.PersonalProfileVMs = new PersonalProfileVM
+            {
+                Email = model.Email
+            };
+
+            var userName = await _reservationService.GetUserName(model.Email);
+
+            if(userName is not null)
+                bigProfileVM.PaymentOption = new PaymentOption
+                {
+                    PaymentOptionId = model.Id,
+                    Email = model.Email,
+                    Name = userName.FirstName +" " + userName.LastName,
+                    Amount = Convert.ToDecimal(model.Price * ((Convert.ToDateTime(model.DateCheckOut) - DateTime.Now).Days))
+                };
+            
+
+            return View(bigProfileVM);
         }
 
-        public async Task<ActionResult> CreatePersonalProfile(PersonalProfileVM personalProfileVM)
+        public async Task<ActionResult> CreatePersonalProfile(BigProfileVM bigProfileVM)
         {
-            if (!ModelState.IsValid)
-                return View(personalProfileVM);
+            bool DecisionParam = false;
+            if (bigProfileVM.PersonalProfileVMs is null)
+                return View(bigProfileVM);
 
-            if (personalProfileVM.Term is not true)
+            if (bigProfileVM.PersonalProfileVMs.Term is not true)
                 return RedirectToAction("PersonalProfile");
 
            
@@ -203,31 +261,32 @@ namespace ReservationSyste.Controllers
             var validate = _helper.ValidateCaptcha(captchaResponse);
             if (!validate.Success)
             {
-                personalProfileVM.Error = "Finish captcha";
+                bigProfileVM.PersonalProfileVMs.Error = "Finish captcha";
                 return RedirectToAction("PersonalProfile", "Reservation" );
             }
 
             var jSonObj = _httpContext.HttpContext.Session.GetString("dateTimeVM");
             var dataTimeVM = JsonSerializer.Deserialize<DateTimeVM>(jSonObj);
 
-            personalProfileVM.Email = dataTimeVM.Email;
-            personalProfileVM.RoomId = Convert.ToInt32(dataTimeVM.Id);
+            bigProfileVM.PersonalProfileVMs.Email = dataTimeVM.Email;
+            bigProfileVM.PersonalProfileVMs.RoomId = Convert.ToInt32(dataTimeVM.Id);
 
             PersonalProfile personalProfile = new PersonalProfile
             {
                 Email = dataTimeVM.Email,
-                Phone = personalProfileVM.Phone,
-                Occupation = personalProfileVM.Occupation,
-                DateOfBirth = personalProfileVM.DateOfBirth,
-                Sex = personalProfileVM.Sex,
+                Phone = bigProfileVM.PersonalProfileVMs.Phone,
+                Occupation = bigProfileVM.PersonalProfileVMs.Occupation,
+                DateOfBirth = bigProfileVM.PersonalProfileVMs.DateOfBirth,
+                Sex = bigProfileVM.PersonalProfileVMs.Sex,
                 CreatedDate = DateTime.Now,
-                LastName = personalProfileVM.LastName,
-                FirstName = personalProfileVM.FirstName,
-                Term = personalProfileVM.Term,
-                AddressLine1 = personalProfileVM.AddressLine1,
-                AddressLine2 = personalProfileVM.AddressLine2,
-                City = personalProfileVM.City,
-                State = personalProfileVM.State,
+                LastName = bigProfileVM.PersonalProfileVMs.LastName,
+                FirstName = bigProfileVM.PersonalProfileVMs.FirstName,
+                Term = bigProfileVM.PersonalProfileVMs.Term,
+                AddressLine1 = bigProfileVM.PersonalProfileVMs.AddressLine1,
+                AddressLine2 = bigProfileVM.PersonalProfileVMs.AddressLine2,
+                City = bigProfileVM.PersonalProfileVMs.City,
+                State = bigProfileVM.PersonalProfileVMs.State,
+                Purpose = bigProfileVM.PersonalProfileVMs.Purpose
             };
 
             using var transaction = _dbContext.Database.BeginTransaction();
@@ -242,9 +301,9 @@ namespace ReservationSyste.Controllers
                         RoomId = Convert.ToInt32(dataTimeVM.Id),
                         CheckIn = dataTimeVM.CheckIn,
                         CheckOut = dataTimeVM.CheckOut,
-                        Purpose = personalProfileVM.Purpose,
-                        AdditionalRequirment = personalProfileVM.AdditionalRequirement,
-                        ArrivalTime = personalProfileVM.ArrivalTime,
+                        Purpose = bigProfileVM.PersonalProfileVMs.Purpose,
+                        AdditionalRequirment = bigProfileVM.PersonalProfileVMs.AdditionalRequirement,
+                        ArrivalTime = bigProfileVM.PersonalProfileVMs.ArrivalTime,
                     };
 
                     var response = await _reservationService.CreatePersonalProfileRoomAsync(personalProfileRoom, _dbContext);
@@ -254,9 +313,12 @@ namespace ReservationSyste.Controllers
                         if (update > 0)
                         {
                            await  transaction.CommitAsync();
-
-                            return PartialView("_PaymentPartialView");
+                            DecisionParam = true;
+                            ViewBag.DecisionParam = DecisionParam;
+                            return RedirectToAction("PersonalProfile", "Reservation", 
+                                new DateClass {ActionNane = "CreatePersonalProfile", Email = dataTimeVM.Email, Id = dataTimeVM.Id});
                         }
+                        ViewBag.DecisionParam = DecisionParam;
                         return RedirectToAction("PersonalProfile", "Reservation");
                     }
                 }
@@ -289,6 +351,62 @@ namespace ReservationSyste.Controllers
             //var authObject = await JsonSerializer.DeserializeAsync<AuthResponse>(streamResponse);
         }
 
+        public async Task<IActionResult> Payment(BigProfileVM model)
+        {
+            TransactionInitializeRequest request = new()
+            {
+                AmountInKobo = Convert.ToInt32(model.PaymentOption.Amount * 100),
+                Email = model.PaymentOption.Email,
+                Reference = Generate().ToString(),
+                Currency = "NGN",
+                CallbackUrl = "https://localhost:7068/Reservation/verify"
+            };
+
+            TransactionInitializeResponse response = Paystack.Transactions.Initialize(request);
+            if (response.Status)
+            {
+                var transaction = new TransactionModel()
+                {
+                    Amount = Convert.ToInt32(model.PaymentOption.Amount),
+                    Email = model.PaymentOption.Email,
+                    TrxRef = request.Reference,
+                    Name = model.PaymentOption.Name,
+                };
+                await _dbContext.Transactions.AddAsync(transaction);
+                await _dbContext.SaveChangesAsync();
+                return Redirect(response.Data.AuthorizationUrl);
+            }
+
+            ViewData["error"] = response.Message;
+            return View();
+        }
+
+
+        public async Task<IActionResult> Verify(string reference)
+        {
+            TransactionVerifyResponse response = Paystack.Transactions.Verify(reference);
+            if (response.Data.Status == "success")
+            {
+                var transaction = _dbContext.Transactions.Where(x => x.TrxRef == reference).FirstOrDefault();
+                if (transaction != null)
+                {
+                    transaction.Status = true;
+                    _dbContext.Transactions.Update(transaction);
+                    await _dbContext.SaveChangesAsync();
+                    var update = await _reservationService.UpdateReservationStatusAsync(Convert.ToInt32(30), (int)ReservationStatusEnum.Booked, _dbContext);
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            ViewData["error"] = response.Data.GatewayResponse;
+            return RedirectToAction("Index");
+        }
+
+        public static int Generate()
+        {
+            Random rand = new Random((int)DateTime.Now.Ticks);
+            return rand.Next(100000000, 999999999);
+        }
+
     }
 
 }
@@ -301,3 +419,4 @@ public class EditReservationVM : Reservation
 {
     public IFormFile Image { get; set; }
 }
+

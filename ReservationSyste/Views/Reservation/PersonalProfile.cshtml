@@ -1,4 +1,4 @@
-﻿@model PersonalProfileVM
+﻿@model BigProfileVM
 
 @{
     Layout = "_InnerLayout";
@@ -6,217 +6,332 @@
 }
 @{
     var recaptchaValue = (ReservationSyste.Utility.RecaptchaOption)ViewBag.RecaptchaValue;
+    var decisionParam = (bool)ViewBag.DecisionParam;
     var error = (String)ViewBag.Error;
 }
 
+<style>
+    .paymentTitle{
+        color: #842029;
+        background-color: #f8d7da;
+        border-color: #f5c2c7;
+        padding-top: 10px;
+        padding-bottom: 20px;
+        border-radius: 10px;
+    }
+    .btnPay{
+        width: 100%;
+    }
+</style>
 
-<div class="col-md-12">
-    <div class="card">
-        <div class="card-header">
-            Personal details
-        </div>
-        <div class="card-body">
-            <blockquote class="blockquote mb-0">
-                <form asp-action="CreatePersonalProfile" asp-controller="Reservation">
+@if (!decisionParam)
+{
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                Personal details
+            </div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <form asp-action="CreatePersonalProfile" asp-controller="Reservation">
 
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                    <div class="form-group row">
-                        <div class="col-sm-3">
-                            <label asp-for="FirstName" class="col-form-label"></label>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="input-group input-group-sm mb-3">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">FirstName</span>
-                                <input asp-for="FirstName" Occupationtype="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                        <div class="form-group row">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.PersonalProfileVMs.FirstName" class="col-form-label"></label>
                             </div>
-                            <span asp-validation-for="FirstName" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-sm-3">
-                            <label asp-for="LastName" class="col-form-label"></label>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="input-group input-group-sm mb-3">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">LastName</span>
-                                <input asp-for="LastName" Occupationtype="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                            </div>
-                            <span asp-validation-for="LastName" class="text-danger"></span>
-                        </div>
-
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-3">
-                            <label asp-for="Sex" class="col-form-label"></label>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="input-group input-group-sm mb-3">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">Sex</span>
-                                <input asp-for="Sex" Occupationtype="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                            </div>
-                            <span asp-validation-for="Sex" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-sm-3">
-                            <label asp-for="DateOfBirth" class="col-form-label"></label>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="input-group input-group-sm mb-3">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">DateOfBirth</span>
-                                <input asp-for="DateOfBirth" Occupationtype="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                            <div class="col-sm-9">
+                                <div class="input-group input-group-sm mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">FirstName</span>
+                                    <input asp-for="@Model.PersonalProfileVMs.FirstName" FirstNametype="text" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                                <span asp-validation-for="@Model.PersonalProfileVMs.FirstName" class="text-danger"></span>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-group row">
-                        <div class="col-sm-3">
-                            <label asp-for="Occupation" class="col-form-label"></label>
-                        </div>
-                        <div class="col-sm-9  ">
-                            <div class="input-group input-group-sm mb-3">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">Occupation</span>
-                                <input asp-for="Occupation" Occupationtype="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                        <div class="form-group row">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.PersonalProfileVMs.LastName" class="col-form-label"></label>
                             </div>
-                            <span asp-validation-for="Occupation" class="text-danger"></span>
+                            <div class="col-sm-9">
+                                <div class="input-group input-group-sm mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">LastName</span>
+                                    <input asp-for="@Model.PersonalProfileVMs.LastName" LastNametype="text" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                                <span asp-validation-for="@Model.PersonalProfileVMs.LastName" class="text-danger"></span>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group row">
-                        <div class="col-sm-3">
-                            <label asp-for="Phone" class="col-form-label"></label>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="input-group input-group-sm mb-3">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">Phone</span>
-                                <input asp-for="Phone" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                        <div class="form-group row">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.PersonalProfileVMs.Sex" class="col-form-label"></label>
                             </div>
-                            <span asp-validation-for="Phone" class="text-danger"></span>
+                            <div class="col-sm-9">
+                                <div class="input-group input-group-sm mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">Sex</span>
+                                    <input asp-for="@Model.PersonalProfileVMs.Sex" Sextype="text" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                                <span asp-validation-for="@Model.PersonalProfileVMs.Sex" class="text-danger"></span>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group row">
-                        <div class="col-sm-3">
-                            <label asp-for="Email" class="col-form-label"></label>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="input-group input-group-sm mb-3">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">Email</span>
-                                <input asp-for="Email" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                        <div class="form-group row">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.PersonalProfileVMs.DateOfBirth" class="col-form-label"></label>
                             </div>
-                            <span asp-validation-for="Email" class="text-danger"></span>
+                            <div class="col-sm-9">
+                                <div class="input-group input-group-sm mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">DateOfBirth</span>
+                                    <input asp-for="@Model.PersonalProfileVMs.DateOfBirth" DateOfBirthtype="text" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group row">
-                        <div class="col-sm-3">
-                            <label asp-for="AddressLine1" class="col-form-label"></label>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="input-group input-group-sm mb-3">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">AddressLine 1</span>
-                                <input asp-for="AddressLine1" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                        <div class="form-group row">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.PersonalProfileVMs.Occupation" class="col-form-label"></label>
                             </div>
-                            <span asp-validation-for="AddressLine1" class="text-danger"></span>
+                            <div class="col-sm-9  ">
+                                <div class="input-group input-group-sm mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">Occupation</span>
+                                    <input asp-for="@Model.PersonalProfileVMs.Occupation" Occupationtype="text" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                                <span asp-validation-for="@Model.PersonalProfileVMs.Occupation" class="text-danger"></span>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group row">
-                        <div class="col-sm-3">
-                            <label asp-for="AddressLine2" class="col-form-label"></label>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="input-group input-group-sm mb-3">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">AddressLine 2</span>
-                                <input asp-for="AddressLine2" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                        <div class="form-group row">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.PersonalProfileVMs.Phone" class="col-form-label"></label>
                             </div>
-                            <span asp-validation-for="AddressLine2" class="text-danger"></span>
+                            <div class="col-sm-9">
+                                <div class="input-group input-group-sm mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">Phone</span>
+                                    <input asp-for="@Model.PersonalProfileVMs.Phone" type="text" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                                <span asp-validation-for="@Model.PersonalProfileVMs.Phone" class="text-danger"></span>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group row">
-                        <div class="col-sm-3">
-                            <label asp-for="City" class="col-form-label"></label>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="input-group input-group-sm mb-3">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">City</span>
-                                <input asp-for="City" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                        <div class="form-group row">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.PersonalProfileVMs.Email" class="col-form-label"></label>
                             </div>
-                            <span asp-validation-for="City" class="text-danger"></span>
+                            <div class="col-sm-9">
+                                <div class="input-group input-group-sm mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">Email</span>
+                                    <input type="hidden" asp-for="@Model.PersonalProfileVMs.Email" id="Email" value="@Model.PersonalProfileVMs.Email" />
+                                    <input asp-for="@Model.PersonalProfileVMs.Email" type="text"  disabled class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                                <span asp-validation-for="@Model.PersonalProfileVMs.Email" class="text-danger"></span>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group row">
-                        <div class="col-sm-3">
-                            <label asp-for="State" class="col-form-label"></label>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="input-group input-group-sm mb-3">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">State</span>
-                                <input asp-for="State" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                        <div class="form-group row">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.PersonalProfileVMs.AddressLine1" class="col-form-label"></label>
                             </div>
-                            <span asp-validation-for="State" class="text-danger"></span>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group row mb-3">
-                        <div class="col-sm-3">
-                            <label asp-for="AdditionalRequirement" class="col-form-label"></label>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="form-floating">
-                                <textarea asp-for="AdditionalRequirement" class="form-control" placeholder="Additional Requirements" id="floatingTextarea"></textarea>
-                                <label for="floatingTextarea"><small>Additional Requirements</small></label>
+                            <div class="col-sm-9">
+                                <div class="input-group input-group-sm mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">AddressLine 1</span>
+                                    <input asp-for="@Model.PersonalProfileVMs.AddressLine1" type="text" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                                <span asp-validation-for="@Model.PersonalProfileVMs.AddressLine1" class="text-danger"></span>
                             </div>
                         </div>
-                    </div>
-                    
-                    
-                    <div class="form-group row">
-                        <div class="col-sm-3">
-                            <label class="custom-control-label" asp-for="SiteKey">Captcha</label>
+
+                        <div class="form-group row">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.PersonalProfileVMs.AddressLine2" class="col-form-label"></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="input-group input-group-sm mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">AddressLine 2</span>
+                                    <input asp-for="@Model.PersonalProfileVMs.AddressLine2" type="text"  class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                                <span asp-validation-for="@Model.PersonalProfileVMs.AddressLine2" class="text-danger"></span>
+                            </div>
                         </div>
-                        <div class="col-sm-9">
-                            <div class="input-group mb-3">
-                                <div class="input-group-text">
-                                    <div class="g-recaptcha" data-sitekey="@recaptchaValue.SiteKey">
+
+                        <div class="form-group row">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.PersonalProfileVMs.Purpose" class="col-form-label"></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="input-group input-group-sm mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">Purpose</span>
+                                    <input asp-for="@Model.PersonalProfileVMs.Purpose" Purposetype="text" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                                <span asp-validation-for="@Model.PersonalProfileVMs.Purpose" class="text-danger"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.PersonalProfileVMs.City" class="col-form-label"></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="input-group input-group-sm mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">City</span>
+                                    <input asp-for="@Model.PersonalProfileVMs.City" Citytype="text" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                                <span asp-validation-for="@Model.PersonalProfileVMs.City" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.PersonalProfileVMs.State" class="col-form-label"></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="input-group input-group-sm mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">State</span>
+                                    <input asp-for="@Model.PersonalProfileVMs.State" type="text" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                                <span asp-validation-for="@Model.PersonalProfileVMs.State" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.PersonalProfileVMs.AdditionalRequirement" class="col-form-label"></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="form-floating">
+                                    <textarea asp-for="@Model.PersonalProfileVMs.AdditionalRequirement"  class="form-control" placeholder="Additional Requirements" id="floatingTextarea"></textarea>
+                                    <label for="floatingTextarea"><small>Additional Requirements</small></label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <div class="col-sm-3">
+                                <label class="custom-control-label" asp-for="@Model.PersonalProfileVMs.SiteKey">Captcha</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-text">
+                                        <div class="g-recaptcha" required data-sitekey="@recaptchaValue.SiteKey">
+                                        </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.PersonalProfileVMs.Term" class="col-form-label"></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <small style="color:cornflowerblue">Read Terms and Condictions</small><br />
+                                <label asp-for="@Model.PersonalProfileVMs.Term">
+                                    <input type="checkbox" required class="custom-control-input" asp-for="@Model.PersonalProfileVMs.Term" />
+                                    <small style="font-size:10px">I have read and agreed to the Booking Condictions</small>
+                                </label>
+                                <span asp-validation-for="@Model.PersonalProfileVMs.Term" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        @*<h3 class="text-danger">@error</h3> *@
+
+
+                        <div class="form-group">
+                            <input type="submit" value="Submit" class="btn btn-secondary float-end" />
+                        </div>
+
+                    </form>
+
+                </blockquote>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="mainCard  row no-gutters" id="">
+        <div class="card-body">
+            <div class="row">
+                <p class="card-text">
+
+                    <div class="col-sm-4">
+                        <p>Guidline for payment</p>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="card" style="width: 24rem;">
+                                <div class="card-body">
+                                    <h3 class="card-title text-center paymentTitle">
+                                        Payment
+                                    </h3>
+                                    <form asp-controller="Reservation" asp-action="Payment">
+                                        <div class="form-group row">
+                                            <input type="hidden" asp-for="@Model.PaymentOption.PaymentOptionId" id="PaymentOptionId" value="@Model.PaymentOption.PaymentOptionId" />
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-3">
+                                                <label asp-for="@Model.PaymentOption.Name" class="col-form-label"></label>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Name</span>
+                                                    <input type="hidden" asp-for="@Model.PaymentOption.Name" id="Name" value="@Model.PaymentOption.Name" />
+                                                    <input asp-for="@Model.PaymentOption.Name" Occupationtype="text" disabled value="@Model.PaymentOption.Name"
+                                                       class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                                </div>
+                                                <span asp-validation-for="@Model.PaymentOption.Name" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-3">
+                                                <label asp-for="@Model.PaymentOption.Email" class="col-form-label"></label>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Email</span>
+                                                    <input type="hidden" asp-for="@Model.PaymentOption.Email" id="Email" value="@Model.PaymentOption.Email" />
+                                                    <input asp-for="@Model.PaymentOption.Email" Occupationtype="text" disabled
+                                                       class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                                </div>
+                                                <span asp-validation-for="@Model.PaymentOption.Email" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-3">
+                                                <label asp-for="@Model.PaymentOption.Amount" class="col-form-label"></label>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Amount</span>
+                                                    <input type="hidden" asp-for="@Model.PaymentOption.Amount" id="Amount" value="@Model.PaymentOption.Amount" />
+                                                    <input asp-for="@Model.PaymentOption.Amount" Occupationtype="text" disabled
+                                                       class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                                </div>
+                                                <span asp-validation-for="@Model.PaymentOption.Amount" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group pt-3">
+                                            <button type="submit" class="btn btn-primary btn-block btnPay">Pay</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <div class="col-sm-3">
-                            <label asp-for="Term" class="col-form-label"></label>
-                        </div>
-                        <div class="col-sm-9">
-                            <small style="color:cornflowerblue">Read Terms and Condictions</small><br />
-                            <label asp-for="Term">
-                                <input type="checkbox" class="custom-control-input" asp-for="Term" />
-                                <small style="font-size:10px">I have read and agreed to the Booking Condictions</small>
-                            </label>
-                            <span asp-validation-for="Term" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    @*<h3 class="text-danger">@error</h3> *@
-
-
-                    <div class="form-group">
-                        <input type="submit" value="Submit" class="btn btn-secondary float-end" />
-                    </div>
-
-                </form>
-
-            </blockquote>
+                </p>
+            </div>
         </div>
     </div>
-</div>
+}
+
+
 
 
 @section script {
@@ -224,7 +339,7 @@
     <script>
         $.noConflict();
         jQuery(function () {
-            $('[data-toggle="datepicker"]').datepicker({
+            jQuery('[data-toggle="datepicker"]').datepicker({
                 autoclose: true,
             });
         });

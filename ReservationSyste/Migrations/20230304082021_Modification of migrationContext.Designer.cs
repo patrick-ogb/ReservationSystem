@@ -12,8 +12,8 @@ using ReservationSyste.Data;
 namespace ReservationSyste.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230122223925_Added Personal Profile registration")]
-    partial class AddedPersonalProfileregistration
+    [Migration("20230304082021_Modification of migrationContext")]
+    partial class ModificationofmigrationContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -113,6 +113,40 @@ namespace ReservationSyste.Migrations
                     b.ToTable("PersonalProfiles");
                 });
 
+            modelBuilder.Entity("ReservationSyste.Models.PersonalProfileRoom", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AdditionalRequirment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ArrivalTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CheckIn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CheckOut")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PersonalProfileId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Purpose")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PersonalProfileRooms");
+                });
+
             modelBuilder.Entity("ReservationSyste.Models.Reservation", b =>
                 {
                     b.Property<int>("Id")
@@ -166,6 +200,34 @@ namespace ReservationSyste.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Reservations");
+                });
+
+            modelBuilder.Entity("ReservationSyste.Models.TransactionModel", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("TrxRef")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Transactions");
                 });
 #pragma warning restore 612, 618
         }

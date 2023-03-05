@@ -15,6 +15,7 @@ namespace ReservationSyste.Services.Interfices
         Task<int> CreatePersonalProfileAsync(PersonalProfile personalProfile, ApplicationDbContext context);
         Task<int> CreatePersonalProfileRoomAsync(PersonalProfileRoom personalProfileRoom, ApplicationDbContext context);
         Task<int> UpdateReservationStatusAsync(int roomId,  int status, ApplicationDbContext context);
+        Task<PersonalProfile> GetUserName(string email);
          bool VerifyEmail(string email);
 
     }

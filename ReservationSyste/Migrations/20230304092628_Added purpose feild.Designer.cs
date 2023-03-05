@@ -12,8 +12,8 @@ using ReservationSyste.Data;
 namespace ReservationSyste.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230123120109_added PersonalProfileRoom")]
-    partial class addedPersonalProfileRoom
+    [Migration("20230304092628_Added purpose feild")]
+    partial class Addedpurposefeild
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -97,6 +97,9 @@ namespace ReservationSyste.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Purpose")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sex")
@@ -200,6 +203,34 @@ namespace ReservationSyste.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Reservations");
+                });
+
+            modelBuilder.Entity("ReservationSyste.Models.TransactionModel", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("TrxRef")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Transactions");
                 });
 #pragma warning restore 612, 618
         }

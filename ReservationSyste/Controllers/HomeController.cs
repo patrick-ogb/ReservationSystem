@@ -23,15 +23,16 @@ namespace ReservationSyste.Controllers
 
         public async Task<IActionResult> Index(string SearchTerm = null)
         {
-            List<Reservation> reservations;
+            List<Reservation> reservations = new List<Reservation>();
             if (SearchTerm != null)
             {
                 reservations = await _reservationService.SearchReservationAsync(SearchTerm);
             }
             else
             {
-                reservations = await _reservationService.GetAllReservationAsync();
+                reservations= await _reservationService.GetAllReservationAsync();
             }
+           
 
             ViewBag.ReservationVM = new ReservationModel {Reservations = reservations };
 
@@ -53,6 +54,10 @@ namespace ReservationSyste.Controllers
 
         public JsonResult CheckInOutJSon(int ReservationId, string ImageUrl) => Json(JsonSerializer.Serialize<DateClass>(new DateClass { Id = ReservationId.ToString(), ImagePath = ImageUrl }));
       
+        public ActionResult Adminlte()
+        {
+            return View();
+        }
 
     }
 }

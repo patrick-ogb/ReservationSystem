@@ -11,7 +11,6 @@ namespace ReservationSyste.Models
 
         [Required]
         public string Email { get; set; }
-
         
         [ Required, DisplayName("Check out Date")]
         public string DateCheckOut { get; set; }
@@ -23,5 +22,6 @@ namespace ReservationSyste.Models
         public string RoomName { get; set; }
         public double Price { get; set; }
         public double RoomCount { get; set; }
+        public string ActionNane { get; set; }
     }
 }

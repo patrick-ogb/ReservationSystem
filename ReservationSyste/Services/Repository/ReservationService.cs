@@ -40,6 +40,19 @@ namespace ReservationSyste.Services.Repository
                          select rFind).ToListAsync();
         }
 
+        //public async Task<List<Reservation>> GetAllReservationAsync()
+        //{
+        //    List<Reservation> reservations = new List<Reservation>();
+        //    var reservation = _context.Reservations;
+        //    if (reservation.Count() > 0)
+        //    {
+        //        reservations = await (from rFind in reservation
+        //                              where rFind.ReservationStatus.Equals(1) || rFind.ReservationStatus.Equals(2)
+        //                              select rFind).ToListAsync();
+        //    }
+        //    return reservations;
+        //}
+
 
         public async  Task<List<Reservation>> SearchReservationAsync(string searchTerm)
         {
@@ -68,7 +81,7 @@ namespace ReservationSyste.Services.Repository
 
         public async Task<int> CreatePersonalProfileAsync(PersonalProfile personalProfile , ApplicationDbContext contextDb)
         {
-            await contextDb.AddAsync(personalProfile);
+            await contextDb.PersonalProfiles.AddAsync(personalProfile);
             await contextDb.SaveChangesAsync();
             return personalProfile.Id; 
         }
@@ -101,6 +114,14 @@ namespace ReservationSyste.Services.Repository
                          select true;
             return result.Any();
         }
+        public async Task<PersonalProfile> GetUserName(string email)
+        {
+            var result = from persn in _context.PersonalProfiles where (persn.Email == email) select persn;
+
+            var newResult = await _context.PersonalProfiles.FirstOrDefaultAsync(x => x.Email.Equals(email));
+            return newResult;
+        }
+
 
         private void Test(string email)
         {

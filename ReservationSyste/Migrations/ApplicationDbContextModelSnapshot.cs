@@ -97,6 +97,9 @@ namespace ReservationSyste.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Purpose")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Sex")
                         .HasColumnType("nvarchar(max)");
 
@@ -198,6 +201,34 @@ namespace ReservationSyste.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Reservations");
+                });
+
+            modelBuilder.Entity("ReservationSyste.Models.TransactionModel", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("TrxRef")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Transactions");
                 });
 #pragma warning restore 612, 618
         }
