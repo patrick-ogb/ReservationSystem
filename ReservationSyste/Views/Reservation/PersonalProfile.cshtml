@@ -6,7 +6,7 @@
 }
 @{
     var recaptchaValue = (ReservationSyste.Utility.RecaptchaOption)ViewBag.RecaptchaValue;
-    var decisionParam = (bool)ViewBag.DecisionParam;
+    var decisionParam = (int)ViewBag.DecisionParam;
     var error = (String)ViewBag.Error;
 }
 
@@ -24,7 +24,7 @@
     }
 </style>
 
-@if (!decisionParam)
+@if (decisionParam == 1)
 {
     <div class="col-md-12">
         <div class="card">
@@ -249,6 +249,96 @@
         </div>
     </div>
 }
+else if(decisionParam == 2)
+{
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                Complementary details
+            </div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <form asp-action="CreatePersonalProfile" asp-controller="Reservation">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.PersonalProfileVMs.Purpose" class="col-form-label"></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="input-group input-group-sm mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">Purpose</span>
+                                    <input asp-for="@Model.PersonalProfileVMs.Purpose" Purposetype="text" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                                <span asp-validation-for="@Model.PersonalProfileVMs.Purpose" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.PersonalProfileVMs.City" class="col-form-label"></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="input-group input-group-sm mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">City</span>
+                                    <input asp-for="@Model.PersonalProfileVMs.City" Citytype="text" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                                <span asp-validation-for="@Model.PersonalProfileVMs.City" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.PersonalProfileVMs.State" class="col-form-label"></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="input-group input-group-sm mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">State</span>
+                                    <input asp-for="@Model.PersonalProfileVMs.State" type="text" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                                <span asp-validation-for="@Model.PersonalProfileVMs.State" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.PersonalProfileVMs.AdditionalRequirement" class="col-form-label"></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="form-floating">
+                                    <textarea asp-for="@Model.PersonalProfileVMs.AdditionalRequirement" class="form-control" placeholder="Additional Requirements" id="floatingTextarea"></textarea>
+                                    <label for="floatingTextarea"><small>Additional Requirements</small></label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <div class="col-sm-3">
+                                <label class="custom-control-label" asp-for="@Model.PersonalProfileVMs.SiteKey">Captcha</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-text">
+                                        <div class="g-recaptcha" required data-sitekey="@recaptchaValue.SiteKey">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Submit" class="btn btn-secondary float-end" />
+                        </div>
+
+                    </form>
+
+                </blockquote>
+            </div>
+        </div>
+    </div>
+}
 else
 {
     <div class="mainCard  row no-gutters" id="">
@@ -315,7 +405,6 @@ else
                                             </div>
                                         </div>
 
-
                                         <div class="form-group pt-3">
                                             <button type="submit" class="btn btn-primary btn-block btnPay">Pay</button>
                                         </div>
@@ -329,6 +418,7 @@ else
             </div>
         </div>
     </div>
+
 }
 
 

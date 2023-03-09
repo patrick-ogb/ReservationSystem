@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ReservationSyste.Models;
 using ReservationSyste.Services.Interfices;
-using ReservationSyste.ViewModels;
 using System.Diagnostics;
 using System.Text.Json;
 
 namespace ReservationSyste.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IReservationService _reservationService;
@@ -37,6 +36,17 @@ namespace ReservationSyste.Controllers
             ViewBag.ReservationVM = new ReservationModel {Reservations = reservations };
 
             return View(new DateClass());
+        }
+
+        public IActionResult Create()
+        {
+            //el metodo de crear retorno true
+            if (true)
+            {
+                BasicNotification("Geetings", NotificationType.Success, "Completed Successfully!");
+            }
+            return RedirectToAction(nameof(Index));
+
         }
 
 

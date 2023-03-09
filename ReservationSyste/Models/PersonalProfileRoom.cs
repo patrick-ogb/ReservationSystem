@@ -10,5 +10,6 @@
         public string Purpose { get; set; }
         public string AdditionalRequirment { get; set; }
         public DateTime ArrivalTime { get; set; }
+        public int ProfileStatus { get; set; }
     }
 }

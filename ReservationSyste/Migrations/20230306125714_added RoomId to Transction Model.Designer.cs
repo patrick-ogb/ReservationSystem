@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReservationSyste.Data;
 
@@ -11,9 +12,10 @@ using ReservationSyste.Data;
 namespace ReservationSyste.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230306125714_added RoomId to Transction Model")]
+    partial class addedRoomIdtoTransctionModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,9 +137,6 @@ namespace ReservationSyste.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("PersonalProfileId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProfileStatus")
                         .HasColumnType("int");
 
                     b.Property<string>("Purpose")

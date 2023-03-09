@@ -9,6 +9,14 @@
     {
       "library": "datepicker@1.0.10",
       "destination": "wwwroot/lib/datepicker/"
+    },
+    {
+      "library": "sweetalert2@11.7.3",
+      "destination": "wwwroot/lib/sweetalert2/",
+      "files": [
+        "sweetalert2.min.js",
+        "sweetalert2.min.css"
+      ]
     }
   ]
 }

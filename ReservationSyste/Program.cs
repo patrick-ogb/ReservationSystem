@@ -1,3 +1,5 @@
+using Hangfire;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ReservationSyste.Data;
@@ -9,7 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<ApplicationDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("Data")));
+var dataStore = builder.Configuration.GetConnectionString("Data");
+builder.Services.AddDbContext<ApplicationDbContext>(option => option.UseSqlServer(dataStore));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var emailConfig = builder.Configuration.GetSection("RecaptchaOption").Get<RecaptchaOption>();
@@ -17,17 +20,20 @@ builder.Services.AddSingleton(emailConfig);
 
 builder.Services.Configure<RecaptchaOption>(builder.Configuration.GetSection(nameof(RecaptchaOption)));
 
-
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
 builder.Services.AddSession(option =>
 {
     option.IdleTimeout = TimeSpan.FromMinutes(128);
 });
 
 builder.Services.AddScoped<IReservationService, ReservationService>();
+
+//CONFIGURE BACKGROUNDSERVICE
+builder.Services.AddHostedService<BackgroundWorkerService>();
 
 
 var app = builder.Build();

@@ -88,6 +88,7 @@
                             class="form-control">
                         <option selected disabled>Select Smoking</option>
                     </select>
+                    <span asp-validation-for="@Model.AllowSmoking" class="text-danger"></span>
                 </div>
             </div>
 
@@ -101,6 +102,7 @@
                             class="form-control">
                         <option selected disabled>Select Butler Service</option>
                     </select>
+                    <span asp-validation-for="@Model.ButlerServiceAvailable" class="text-danger"></span>
                 </div>
             </div>
 
@@ -114,6 +116,7 @@
                             class="form-control">
                         <option selected disabled>Select AirConditioning</option>
                     </select>
+                    <span asp-validation-for="@Model.AirConditioning" class="text-danger"></span>
                 </div>
             </div>
 

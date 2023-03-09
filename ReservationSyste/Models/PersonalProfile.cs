@@ -15,12 +15,19 @@ namespace ReservationSyste.Models
             public string Email { get; set; }
             public string AddressLine1 { get; set; }
             public string  AddressLine2 { get; set; }
-        public string Purpose { get; set; }
-        public string  City { get; set; }
+            public string Purpose { get; set; }
+            public string  City { get; set; }
             public string State { get; set; }
             public bool Term { get; set; }
             public DateTime CreatedDate { get; set; }
             public DateTime ModifiedDate { get; set; }
 
+    }
+
+    public class Complementary
+    {
+        public string Purpose { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
     }
 }

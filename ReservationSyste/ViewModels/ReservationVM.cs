@@ -29,16 +29,16 @@ namespace ReservationSyste.ViewModels
         public IFormFile Image { get; set; }
         public string ImageUrl { get; set; }
 
-        [Required]
+        //[Required]
         [DisplayName("Smoking Allowed")]
         public string SmokingAllowed { get; set; }
         public List<AllowSmoking> AllowSmoking { get; set; }
-        [Required]
+        //[Required]
         [DisplayName("Butller Services Available")]
         public string ButlerServiceAvailable { get; set; }
         public List<ButlerService> ButlerServices { get; set; }
 
-        [Required]
+        //[Required]
         [DisplayName("Air Conditioning")]
         public string AirConditioning { get; set; }
         public List<AirCondition> AirConditions { get; set; }

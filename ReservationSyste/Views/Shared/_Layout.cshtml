@@ -9,6 +9,7 @@
     <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
     <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="/lib/sweetalert2/sweetalert2.min.css" asp-append-version="true" />
     <link href="~/css/customstylesheet.css" rel="stylesheet" />
     <!-- Datepicker CSS -->
     <link href="~/lib/datepicker/datepicker.css" rel="stylesheet" />
@@ -36,9 +37,6 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Adminlte">Adim Lte</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy"></a>
                         </li>
                         <li class="nav-item">
@@ -57,6 +55,7 @@
     </div>
     <div class="container" id="container">
         <main role="main" class="pb-3">
+            <script src="/lib/sweetalert2/sweetalert2.min.js" asp-append-version="true" ></script>
             @RenderBody()
         </main>
     </div>

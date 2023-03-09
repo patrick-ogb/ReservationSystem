@@ -14,7 +14,7 @@ using System.Text.Json;
 namespace ReservationSyste.Controllers
 {
 
-    public class ReservationController : Controller
+    public class ReservationController : BaseController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IReservationService _reservationService;
@@ -83,12 +83,15 @@ namespace ReservationSyste.Controllers
                         //RoomText = reservationVM.RoomText,
                         Price = reservationVM.Price,
                         ReservationStatus = (int)ReservationStatusEnum.Initiated,
-
                     };
 
                     var result = await _reservationService.CreateReservationAsync(reservation);
                     if (result > 0)
-                        return RedirectToAction("Index", "Home");
+                    {
+                        BasicNotification("Reservation created", NotificationType.Error, "Successful!");
+                        return View();
+                    }
+                    return View(reservationVM);
                 }
             }
 
@@ -173,11 +176,11 @@ namespace ReservationSyste.Controllers
          
         public async Task<ActionResult> PersonalProfile(DateClass model)
         {
-            bool DecisionParam = false;
+            int DecisionParam = Convert.ToInt32(DecissionParameter.FormPage);
 
-            if(model.ActionNane == "CreatePersonalProfile" )
+            if (model.ActionNane == "CreatePersonalProfile" )
             {
-                DecisionParam = true;
+                DecisionParam = Convert.ToInt32(DecissionParameter.PaymentPage);
                 ViewBag.DecisionParam = DecisionParam;
 
                 var jSonObj = _httpContext.HttpContext.Session.GetString("dateTimeVM");
@@ -201,7 +204,13 @@ namespace ReservationSyste.Controllers
                 return RedirectToAction("Index", "Home");
 
             if (_reservationService.VerifyEmail(model.Email))
-                    DecisionParam = true;
+            {
+                 DecisionParam = Convert.ToInt32(DecissionParameter.CommonPage);
+
+
+            }
+
+            var nDays = (Convert.ToDateTime(model.DateCheckOut) - DateTime.Now.Date).Days;
 
             DateTimeVM dateTimeVM = new DateTimeVM();
                 dateTimeVM.Email = model.Email;
@@ -213,15 +222,14 @@ namespace ReservationSyste.Controllers
                 dateTimeVM.Price = model.Price;
                 dateTimeVM.CheckOut = Convert.ToDateTime(model.DateCheckOut);
                 dateTimeVM.CheckIn = DateTime.Now;
-                dateTimeVM.Days = (Convert.ToDateTime(model.DateCheckOut) - DateTime.Now).Days;
+                dateTimeVM.Days = nDays;
                 dateTimeVM.RoomCount = (int)model.RoomCount;
                 dateTimeVM.SiteKey = _option.SiteKey;
-                dateTimeVM.TatalAmount = (model.Price * ((Convert.ToDateTime(model.DateCheckOut) - DateTime.Now).Days));
+                dateTimeVM.TatalAmount = (model.Price * nDays);
                 ViewBag.Error = "Commence Captcha";
                 ViewBag.RecaptchaValue = _option;
                 ViewBag.DecisionParam = DecisionParam;
                 ViewBag.Datetimevm = dateTimeVM;
-
 
             var jSonObject  = JsonSerializer.Serialize<DateTimeVM>(dateTimeVM);
             _httpContext.HttpContext.Session.SetString("dateTimeVM", jSonObject);
@@ -234,15 +242,14 @@ namespace ReservationSyste.Controllers
 
             var userName = await _reservationService.GetUserName(model.Email);
 
-            if(userName is not null)
-                bigProfileVM.PaymentOption = new PaymentOption
-                {
-                    PaymentOptionId = model.Id,
-                    Email = model.Email,
-                    Name = userName.FirstName +" " + userName.LastName,
-                    Amount = Convert.ToDecimal(model.Price * ((Convert.ToDateTime(model.DateCheckOut) - DateTime.Now).Days))
-                };
-            
+            if (userName is not null)
+            {
+                bigProfileVM.PaymentOption  = new PaymentOption();
+                bigProfileVM.PaymentOption.PaymentOptionId = model.Id;
+                bigProfileVM.PaymentOption.Email = model.Email;
+                bigProfileVM.PaymentOption.Name = userName.FirstName + " " + userName.LastName;
+                bigProfileVM.PaymentOption.Amount = Convert.ToDecimal(model.Price * nDays);
+            }
 
             return View(bigProfileVM);
         }
@@ -304,6 +311,7 @@ namespace ReservationSyste.Controllers
                         Purpose = bigProfileVM.PersonalProfileVMs.Purpose,
                         AdditionalRequirment = bigProfileVM.PersonalProfileVMs.AdditionalRequirement,
                         ArrivalTime = bigProfileVM.PersonalProfileVMs.ArrivalTime,
+                        ProfileStatus = Convert.ToInt32(ProfileStatus.Open)
                     };
 
                     var response = await _reservationService.CreatePersonalProfileRoomAsync(personalProfileRoom, _dbContext);
@@ -331,8 +339,6 @@ namespace ReservationSyste.Controllers
 
             return RedirectToAction("PersonalProfile");
         }
-
-
 
         public void HttpRequestDemo()
         {
@@ -371,6 +377,7 @@ namespace ReservationSyste.Controllers
                     Email = model.PaymentOption.Email,
                     TrxRef = request.Reference,
                     Name = model.PaymentOption.Name,
+                    RoomId = model.PaymentOption.PaymentOptionId
                 };
                 await _dbContext.Transactions.AddAsync(transaction);
                 await _dbContext.SaveChangesAsync();
@@ -378,9 +385,10 @@ namespace ReservationSyste.Controllers
             }
 
             ViewData["error"] = response.Message;
-            return View();
+            var msg = response.Message;
+            BasicNotification(msg, NotificationType.Error, "Failed to complete payment!");
+            return RedirectToAction("Index", "Home"); ;
         }
-
 
         public async Task<IActionResult> Verify(string reference)
         {
@@ -393,11 +401,15 @@ namespace ReservationSyste.Controllers
                     transaction.Status = true;
                     _dbContext.Transactions.Update(transaction);
                     await _dbContext.SaveChangesAsync();
-                    var update = await _reservationService.UpdateReservationStatusAsync(Convert.ToInt32(30), (int)ReservationStatusEnum.Booked, _dbContext);
+                    var roomId = await _reservationService.GetRoomId(reference);
+                    var update = await _reservationService.UpdateReservationStatusAsync(Convert.ToInt32(roomId), (int)ReservationStatusEnum.Booked, _dbContext);
+                    BasicNotification("Thanks for your Patronage", NotificationType.Success, "Payment Successful!");
                     return RedirectToAction("Index", "Home");
                 }
             }
-            ViewData["error"] = response.Data.GatewayResponse;
+            var resp = response.Data.GatewayResponse;
+            ViewData["error"] = resp;
+            BasicNotification(resp, NotificationType.Success, "Payment Failed!");
             return RedirectToAction("Index");
         }
 
