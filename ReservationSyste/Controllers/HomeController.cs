@@ -30,7 +30,7 @@ namespace ReservationSyste.Controllers
             else
             {
                 reservations= await _reservationService.GetAllReservationAsync();
-            }
+             }
            
 
             ViewBag.ReservationVM = new ReservationModel {Reservations = reservations };
@@ -59,10 +59,10 @@ namespace ReservationSyste.Controllers
         {
             _httpContext.HttpContext.Session.SetString("sessionRoomValue", SessionValue);
 
-            return PartialView("_CheckInOut", new DateClass { Id = SessionValue.Split("!!!")[0], ImagePath = SessionValue.Split("!!!")[1] });
+            return PartialView("_CheckInOut", new DateClass { Id = Convert.ToInt32(SessionValue.Split("!!!")[0]), ImagePath = SessionValue.Split("!!!")[1] });
         }
 
-        public JsonResult CheckInOutJSon(int ReservationId, string ImageUrl) => Json(JsonSerializer.Serialize<DateClass>(new DateClass { Id = ReservationId.ToString(), ImagePath = ImageUrl }));
+        public JsonResult CheckInOutJSon(int ReservationId, string ImageUrl) => Json(JsonSerializer.Serialize<DateClass>(new DateClass { Id = ReservationId, ImagePath = ImageUrl }));
       
         public ActionResult Adminlte()
         {

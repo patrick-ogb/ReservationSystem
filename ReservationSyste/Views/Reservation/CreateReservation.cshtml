@@ -23,7 +23,8 @@
             color:blue;
         }
     </style>
-    <h5 class="card-header"><span id="cardHeader">Setup new room</span></h5>
+    <h5 class="card-header"><span id="cardHeader">Setup new room</span> 
+    </h5>
     <div class="card-body p-5 ml-5 mb-3 mr-5" id="setup">
         <form asp-action="CreateReservation" asp-controller="Reservation" enctype="multipart/form-data">
 
@@ -46,7 +47,16 @@
                     <span asp-validation-for="@Model.Content" class="text-danger"></span>
                 </div>
             </div>
-
+            <div class="form-group row pb-2">
+                <div class="col-sm-3">
+                    <label asp-for="@Model.LeavingDate" class="col-form-label"></label>
+                </div>
+                <div class="col-sm-9">
+                    @*<input asp-for="@Model.LeavingDate" class="form-control" />*@
+                    <input type="text" id="LeavingDate" name="LeavingDate" value="@Model.LeavingDate.ToString("yyyy/MM/dd")" class="datepicker form-control" />
+                    <span asp-validation-for="@Model.LeavingDate" class="text-danger"></span>
+                </div>
+            </div>
             <div class="form-group row pb-2">
                 <div class="col-sm-3">
                     <label asp-for="@Model.Price" class="col-form-label"></label>
@@ -66,17 +76,8 @@
                     <span asp-validation-for="@Model.RoomCount" class="text-danger"></span>
                 </div>
             </div>
-
-            <div class="form-group row pb-2">
-                <div class="col-sm-3">
-                    <label asp-for="@Model.Image" class="col-form-label"></label>
-                </div>
-                <div class="col-sm-9">
-                    <div class="custom-file">
-                        <input asp-for="@Model.Image" id="changeOpacity" class="form-control custom-file-input" />
-                    </div>
-                </div>
-            </div>
+            
+            
 
             <div class="form-group row pb-2">
                 <div class="col-sm-3">
@@ -91,7 +92,7 @@
                     <span asp-validation-for="@Model.AllowSmoking" class="text-danger"></span>
                 </div>
             </div>
-
+            
             <div class="form-group row pb-2">
                 <div class="col-sm-3">
                     <label asp-for="@Model.ButlerServiceAvailable" class="col-form-label"></label>
@@ -119,6 +120,18 @@
                     <span asp-validation-for="@Model.AirConditioning" class="text-danger"></span>
                 </div>
             </div>
+            <div class="form-group row pb-2">
+                <div class="col-sm-3">
+                    <label asp-for="@Model.Image" class="col-form-label"></label>
+                </div>
+                <div class="col-sm-9">
+                    <div class="custom-file">
+                        <input asp-for="@Model.Image" id="changeOpacity" class="form-control custom-file-input" />
+                    </div>
+                </div>
+            </div>
+
+            
 
             <div class="form-group row pb-2 pt-2">
                     <div class="col-sm-3"></div>
@@ -138,6 +151,17 @@
                             $(this).next('.custom-file-label').html(fileName);
                         });
                     });
+
+                    $(function(){
+                        $('.datepicker').datepicker({
+                                    changeYear: true,
+                                 changeMonth: true,
+                                    yearRange: "-100:+0",
+                        });
+                    });
+
+                   
+
                 </script>
 
             }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ReservationSyste.Migrations
 {
-    public partial class ModificationofmigrationContext : Migration
+    public partial class recreatedatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,7 +40,8 @@ namespace ReservationSyste.Migrations
                     CheckOut = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Purpose = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AdditionalRequirment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ArrivalTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ArrivalTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProfileStatus = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,6 +63,7 @@ namespace ReservationSyste.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AddressLine1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AddressLine2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Purpose = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     State = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Term = table.Column<bool>(type: "bit", nullable: false),
@@ -109,6 +111,7 @@ namespace ReservationSyste.Migrations
                     TrxRef = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false),
+                    RoomId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>

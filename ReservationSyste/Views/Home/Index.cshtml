@@ -1,7 +1,17 @@
 ﻿@model DateClass;
 @{
-    var reservationVM = (ReservationModel)ViewBag.ReservationVM;
+    var reservationVmM = (ReservationModel)ViewBag.ReservationVM;
+    ReservationVM reservationVM = new ReservationVM {Id = 1, Name = "Noble" };
 }
+<div class="container">
+    <form method="post" asp-action="CreateReservation" asp-controller="Reservation">
+        @*<input type="text" hidden value="@(new ReservationVM {Id = 1, Name = "Noble" })" />*@
+        <input type="hidden" asp-for="Id" id="hiddenId" value="20" />
+        <input type="hidden" asp-for="RoomCount" id="hiddenId" value="5551" />
+        <button type="submit" class="btn btn-primary">Go to Reservation</button>
+    </form>
+    </div>
+
 <div class=" col-sm-12 pb-1 mb-4 mt-3 " style="box-shadow: 1px 1px 10px 2px">
     <form mothod="get" asp-action="Index" asp-controller="Home">
         <div class="input-group">
@@ -16,7 +26,7 @@
 
 <table id="ReservationtableId" class="table table-striped border">
     <tbody>
-        @foreach (var reservation in reservationVM.Reservations)
+        @foreach (var reservation in reservationVmM.Reservations)
         {
             <partial name="_RoomCard" , model="reservation" />
         }

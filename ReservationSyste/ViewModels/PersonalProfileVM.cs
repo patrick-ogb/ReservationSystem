@@ -1,11 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReservationSyste.ViewModels
 {
     public class PersonalProfileVM
     {
         public int Id { get; set; }
+        [NotMapped]
+        public string Name { get; set; } = string.Empty;
         public int RoomId { get; set; }
         [Required]
         [DisplayName("First Name")]
@@ -46,5 +49,6 @@ namespace ReservationSyste.ViewModels
         public string Error { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
+        public decimal Price { get; set; }
     }
 }

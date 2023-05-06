@@ -15,6 +15,7 @@
     <link href="~/lib/datepicker/datepicker.css" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.css" />
+    <script src="https://kit.fontawesome.com/47cb33fe4d.js" crossorigin="anonymous"></script>
 
     
 
@@ -71,20 +72,15 @@
     <script src="~/js/customscript.js"></script>
     <!-- Datepicker JS-->
     <script src="~/lib/datepicker/datepicker.js"></script>
-
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <!-- Bootstrap Js -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
-
+    @*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>*@
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.js"></script>
-
-
-
-
-    @if (IsSectionDefined("Script"))
+    @await RenderSectionAsync("Script", required: false)
+   @* @if (IsSectionDefined("Script"))
     {
         @RenderSection("Script", required: true);
-    }
+    }*@
 </body>
 </html>

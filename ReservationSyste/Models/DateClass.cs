@@ -7,7 +7,7 @@ namespace ReservationSyste.Models
     public class DateClass
     {
         public string ImagePath { get; set; }
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string Email { get; set; }
@@ -20,7 +20,7 @@ namespace ReservationSyste.Models
 
         [DisplayName("Room Type")]
         public string RoomName { get; set; }
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         public double RoomCount { get; set; }
         public string ActionNane { get; set; }
     }

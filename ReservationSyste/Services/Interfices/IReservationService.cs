@@ -17,7 +17,7 @@ namespace ReservationSyste.Services.Interfices
         Task<int> UpdateReservationStatusAsync(int roomId,  int status, ApplicationDbContext context);
         Task<PersonalProfile> GetUserName(string email);
          bool VerifyEmail(string email);
-        Task<string> GetRoomId(string reference);
+        Task<int> GetRoomId(string reference);
 
     }
 }

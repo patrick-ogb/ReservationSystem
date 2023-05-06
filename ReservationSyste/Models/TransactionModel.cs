@@ -8,7 +8,7 @@
         public string TrxRef { get; set; }
         public string Email { get; set; }
         public bool Status { get; set; }
-        public string RoomId { get; set; }
+        public int RoomId { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
     }
 }

@@ -4,7 +4,7 @@ namespace ReservationSyste.ViewModels
 {
     public class PaymentOption
     {
-        public string PaymentOptionId { get; set; }
+        public int PaymentOptionId { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]

@@ -8,6 +8,7 @@
     var recaptchaValue = (ReservationSyste.Utility.RecaptchaOption)ViewBag.RecaptchaValue;
     var decisionParam = (int)ViewBag.DecisionParam;
     var error = (String)ViewBag.Error;
+    var actiontext = (String)ViewBag.htmlText;
 }
 
 <style>
@@ -36,7 +37,8 @@
                     <form asp-action="CreatePersonalProfile" asp-controller="Reservation">
 
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+                        <input type="hidden" asp-for="@Model.PersonalProfileVMs.Name" id="hiddenId" value="PersonalProfile" />
+                        <input type="hidden" asp-for="@Model.PersonalProfileVMs.Price" id="price" value="@Model.PersonalProfileVMs.Price" />
                         <div class="form-group row">
                             <div class="col-sm-3">
                                 <label asp-for="@Model.PersonalProfileVMs.FirstName" class="col-form-label"></label>
@@ -83,7 +85,7 @@
                             <div class="col-sm-9">
                                 <div class="input-group input-group-sm mb-3">
                                     <span class="input-group-text" id="inputGroup-sizing-sm">DateOfBirth</span>
-                                    <input asp-for="@Model.PersonalProfileVMs.DateOfBirth" DateOfBirthtype="text" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                    <input asp-for="@Model.PersonalProfileVMs.DateOfBirth" DateOfBirthtype="text" data-toggle="datepicker1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                                 </div>
                             </div>
                         </div>
@@ -235,7 +237,6 @@
                             </div>
                         </div>
 
-                        @*<h3 class="text-danger">@error</h3> *@
 
 
                         <div class="form-group">
@@ -254,60 +255,65 @@ else if(decisionParam == 2)
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
+                @actiontext;
                 Complementary details
             </div>
             <div class="card-body">
                 <blockquote class="blockquote mb-0">
-                    <form asp-action="CreatePersonalProfile" asp-controller="Reservation">
+                    <form asp-action="CreatePersonalProfile" asp-controller="Reservation" asp-antiforgery="true">
 
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+                        <input type="hidden" asp-for="@Model.ComplementaryVM.Name" id="hiddenId" value="Complementary" />
+                        <input type="hidden" asp-for="@Model.ComplementaryVM.RoomId" id="roomId" value="@Model.ComplementaryVM.RoomId" />
+                        <input type="hidden" asp-for="@Model.ComplementaryVM.PersonalProfileId" id="personalProfileId" value="@Model.ComplementaryVM.PersonalProfileId" />
+                        <input type="hidden" asp-for="@Model.ComplementaryVM.CheckOut" id="checkOut" value="@Model.ComplementaryVM.CheckOut" />
+                        <input type="hidden" asp-for="@Model.ComplementaryVM.Price" id="price" value="@Model.ComplementaryVM.Price" />
                         <div class="form-group row">
                             <div class="col-sm-3">
-                                <label asp-for="@Model.PersonalProfileVMs.Purpose" class="col-form-label"></label>
+                                <label asp-for="@Model.ComplementaryVM.Purpose" class="col-form-label"></label>
                             </div>
                             <div class="col-sm-9">
                                 <div class="input-group input-group-sm mb-3">
                                     <span class="input-group-text" id="inputGroup-sizing-sm">Purpose</span>
-                                    <input asp-for="@Model.PersonalProfileVMs.Purpose" Purposetype="text" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                    <input asp-for="@Model.ComplementaryVM.Purpose" Purposetype="text" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                                 </div>
-                                <span asp-validation-for="@Model.PersonalProfileVMs.Purpose" class="text-danger"></span>
+                                <span asp-validation-for="@Model.ComplementaryVM.Purpose" class="text-danger"></span>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-sm-3">
-                                <label asp-for="@Model.PersonalProfileVMs.City" class="col-form-label"></label>
+                                <label asp-for="@Model.ComplementaryVM.City" class="col-form-label"></label>
                             </div>
                             <div class="col-sm-9">
                                 <div class="input-group input-group-sm mb-3">
                                     <span class="input-group-text" id="inputGroup-sizing-sm">City</span>
-                                    <input asp-for="@Model.PersonalProfileVMs.City" Citytype="text" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                    <input asp-for="@Model.ComplementaryVM.City" Citytype="text" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                                 </div>
-                                <span asp-validation-for="@Model.PersonalProfileVMs.City" class="text-danger"></span>
+                                <span asp-validation-for="@Model.ComplementaryVM.City" class="text-danger"></span>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-sm-3">
-                                <label asp-for="@Model.PersonalProfileVMs.State" class="col-form-label"></label>
+                                <label asp-for="@Model.ComplementaryVM.State" class="col-form-label"></label>
                             </div>
                             <div class="col-sm-9">
                                 <div class="input-group input-group-sm mb-3">
                                     <span class="input-group-text" id="inputGroup-sizing-sm">State</span>
-                                    <input asp-for="@Model.PersonalProfileVMs.State" type="text" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                    <input asp-for="@Model.ComplementaryVM.State" type="text" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                                 </div>
-                                <span asp-validation-for="@Model.PersonalProfileVMs.State" class="text-danger"></span>
+                                <span asp-validation-for="@Model.ComplementaryVM.State" class="text-danger"></span>
                             </div>
                         </div>
 
                         <div class="form-group row mb-3">
-                            <div class="col-sm-3">
-                                <label asp-for="@Model.PersonalProfileVMs.AdditionalRequirement" class="col-form-label"></label>
+                            <div class="col-sm-4">
+                                <label asp-for="@Model.ComplementaryVM.AdditionalRequirement" class="col-form-label"></label>
                             </div>
-                            <div class="col-sm-9">
+                            <div class="col-sm-8">
                                 <div class="form-floating">
-                                    <textarea asp-for="@Model.PersonalProfileVMs.AdditionalRequirement" class="form-control" placeholder="Additional Requirements" id="floatingTextarea"></textarea>
+                                    <textarea asp-for="@Model.ComplementaryVM.AdditionalRequirement" class="form-control" placeholder="Additional Requirements" id="floatingTextarea"></textarea>
                                     <label for="floatingTextarea"><small>Additional Requirements</small></label>
                                 </div>
                             </div>
@@ -423,16 +429,18 @@ else
 
 
 
-
 @section script {
     <script src="https://www.google.com/recaptcha/api.js"></script>
     <script>
         $.noConflict();
-        jQuery(function () {
-            jQuery('[data-toggle="datepicker"]').datepicker({
+        jQuery(document).ready(function () {
+            jQuery(function () {
+            jQuery('[data-toggle="datepicker1"]').datepicker({
                 autoclose: true,
             });
         });
+        })
+        
     </script>
 }
 

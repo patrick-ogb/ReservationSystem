@@ -22,7 +22,7 @@ public class BackgroundWorkerService : BackgroundService
         {
             _logger.LogInformation($"Worker running at {DateTimeOffset.Now}");
             await GetExpiredReservations(stoppingToken);
-            await Task.Delay(TimeSpan.FromMinutes(2), stoppingToken);
+            await Task.Delay(TimeSpan.FromHours(1), stoppingToken);
         }
     }
 

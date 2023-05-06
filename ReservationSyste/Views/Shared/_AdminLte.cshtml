@@ -15,6 +15,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="~/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/css/adminlte.min.css">
+    <script src="https://kit.fontawesome.com/47cb33fe4d.js" crossorigin="anonymous"></script>
+    <link href="~/lib/jquery-ui-1.13.2.custom/jquery-ui-1.13.2.custom/jquery-ui.min.css" rel="stylesheet" />
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -285,11 +287,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- AdminLTE App -->
     @*<script src="dist/js/adminlte.min.js"></script>*@
     <script src="~/js/adminlte.min.js"></script>
-
-    
-    @if (IsSectionDefined("Script"))
+    <script src="~/lib/jquery-ui-1.13.2.custom/jquery-ui-1.13.2.custom/jquery-ui.min.js"></script>
+    @await RenderSectionAsync("Script", required: false)
+    @*@if (IsSectionDefined("Script"))
     {
         @RenderSection("Script", required: true);
-    }
+    }*@
 </body>
 </html>

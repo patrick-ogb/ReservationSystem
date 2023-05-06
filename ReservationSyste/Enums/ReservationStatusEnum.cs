@@ -18,7 +18,7 @@
     public enum DecissionParameter
     {
         FormPage = 1,
-        CommonPage =2,
+        ComplementoryPage =2,
         PaymentPage=3,
     }
 }

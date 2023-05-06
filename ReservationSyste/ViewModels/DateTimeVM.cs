@@ -11,6 +11,6 @@ namespace ReservationSyste.ViewModels
         public string SiteKey { get; set; }
         public string Error { get; set; }
         public int RoomId { get; set; }
-        public double TatalAmount { get; set; }
+        public decimal TatalAmount { get; set; }
     }
 }

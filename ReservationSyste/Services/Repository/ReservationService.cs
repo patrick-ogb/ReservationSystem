@@ -75,7 +75,7 @@ namespace ReservationSyste.Services.Repository
         {
             await contextDb.PersonalProfiles.AddAsync(personalProfile);
             await contextDb.SaveChangesAsync();
-            return personalProfile.Id; 
+            return Convert.ToInt32(personalProfile.Id); 
         }
         public async Task<int> CreatePersonalProfileRoomAsync(PersonalProfileRoom personalProfileRoom, ApplicationDbContext contextDb)
         {
@@ -91,7 +91,7 @@ namespace ReservationSyste.Services.Repository
                 entity.ReservationStatus= status;
                 contextDb.Reservations.Update(entity);
                 await contextDb.SaveChangesAsync();
-                return entity.Id;
+                return Convert.ToInt32(entity.Id);
             }
             return 0;
         }
@@ -102,7 +102,7 @@ namespace ReservationSyste.Services.Repository
                          select true;
             return result.Any();
         }
-        public async Task<string> GetRoomId(string reference)
+        public async Task<int> GetRoomId(string reference)
         {
             var result = await (from trans in _context.Transactions
                          where trans.TrxRef == reference

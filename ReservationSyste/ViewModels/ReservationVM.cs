@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace ReservationSyste.ViewModels
 {
     public class ReservationVM
-    {
+    { 
         public ReservationVM()
         {
             AllowSmoking = new List<AllowSmoking>();
@@ -23,7 +23,7 @@ namespace ReservationSyste.ViewModels
         [Required]
         [DisplayName("Number of rooms")]
         public int RoomCount { get; set; }
-        
+        public DateTime LeavingDate { get; set; } = Convert.ToDateTime(DateTime.Now.ToString("yyy-MM-dd"));
         [Required]
         [DisplayName("Room photo")]
         public IFormFile Image { get; set; }
@@ -42,6 +42,7 @@ namespace ReservationSyste.ViewModels
         [DisplayName("Air Conditioning")]
         public string AirConditioning { get; set; }
         public List<AirCondition> AirConditions { get; set; }
+       
     }
 
 

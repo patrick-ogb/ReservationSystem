@@ -33,7 +33,7 @@ builder.Services.AddSession(option =>
 builder.Services.AddScoped<IReservationService, ReservationService>();
 
 //CONFIGURE BACKGROUNDSERVICE
-builder.Services.AddHostedService<BackgroundWorkerService>();
+//builder.Services.AddHostedService<BackgroundWorkerService>();
 
 
 var app = builder.Build();

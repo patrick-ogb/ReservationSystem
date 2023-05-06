@@ -12,8 +12,8 @@ using ReservationSyste.Data;
 namespace ReservationSyste.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230306125714_added RoomId to Transction Model")]
-    partial class addedRoomIdtoTransctionModel
+    [Migration("20230318140435_re-create database")]
+    partial class recreatedatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -139,6 +139,9 @@ namespace ReservationSyste.Migrations
                     b.Property<int>("PersonalProfileId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ProfileStatus")
+                        .HasColumnType("int");
+
                     b.Property<string>("Purpose")
                         .HasColumnType("nvarchar(max)");
 
@@ -222,8 +225,8 @@ namespace ReservationSyste.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RoomId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
