@@ -1,0 +1,27 @@
+﻿@model Response
+
+<div class="container">
+<div class="row">
+    <div class="col-sm-6">
+            <strong>Status: </strong> @Model.status
+    </div>
+    <div class="col-sm-6">
+       <strong>Mesage: </strong>  @Model.message
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-3">
+       <strong>Authorization: </strong> @Model.data.authorizationId
+    </div>
+        <div class="col-sm-3">
+           <strong>BatchRef: </strong> @Model.data.batchRef
+        </div>
+        <div class="col-sm-3">
+           <strong>Total Amount: </strong> @Model.data.totalAmount
+        </div>
+        <div class="col-sm-3">
+           <strong>Transaction Date: </strong> @Model.data.transactionDate
+        </div>
+
+</div>
+</div>
