@@ -32,6 +32,8 @@ namespace ReservationSyste.Services.Repository
         }
         public async Task<List<Reservation>> GetAllReservationAsync()
         {
+            var res = await _context.Reservations.FromSqlRaw($@"Select * from Reservations where ReservationStatus = 1 
+                        Or  ReservationStatus = 2").ToListAsync();
             return await (from rFind in _context.Reservations 
                          where rFind.ReservationStatus.Equals(1) || rFind.ReservationStatus.Equals(2)
                          select rFind).ToListAsync();

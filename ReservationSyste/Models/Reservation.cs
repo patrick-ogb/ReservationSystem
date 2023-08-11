@@ -21,6 +21,7 @@ namespace ReservationSyste.Models
         public int ModifiedBy { get; set; }
         public string ImageUrl { get; set; }
         public int ReservationStatus { get; set; }
+       // public List<int> YearListRange { get; set; }
     }
 
 

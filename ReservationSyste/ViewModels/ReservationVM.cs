@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace ReservationSyste.ViewModels
 {
@@ -10,9 +11,16 @@ namespace ReservationSyste.ViewModels
             AllowSmoking = new List<AllowSmoking>();
             ButlerServices = new List<ButlerService>();
             AirConditions = new List<AirCondition>();
+            YearListRange = new List<GenerateYear>();
+
         }
+
+        [DataType(DataType.Date), DisplayFormat(DataFormatString ="{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime TestDate { get; set; }
+
         public int Id { get; set; }
-        
+        [Required]
+        public string ProductId { get; set; } = "";
         [Required]
         public string Name { get; set; }
         public string DateCreated { get; set; }
@@ -42,9 +50,51 @@ namespace ReservationSyste.ViewModels
         [DisplayName("Air Conditioning")]
         public string AirConditioning { get; set; }
         public List<AirCondition> AirConditions { get; set; }
-       
+
+
+        public string Year { get;set; }
+        public List<GenerateYear> YearListRange { get; set; }
+
+        public string Month { get; set; }
+        public List<GenerateYear> MonthListRange { get; set; }
+
     }
 
+
+
+
+
+    public class GenerateYear
+    {
+        public int YearId { get; set; }
+        public int Year { get; set; }
+
+        public int monthId { get; set; }
+        public int Month { get; set; }
+        public string MonthName { get;set; }
+        public static List<GenerateYear> GetYear()
+        {
+            List<GenerateYear> yearList = new List<GenerateYear>();
+            int count = 0;
+            for (int year = 2018; year <= DateTime.Now.Year; year++)
+            {
+                count++;
+                yearList.Add(new GenerateYear { Year = year, YearId = count });
+            }
+            return yearList;
+        }
+
+        public static List<GenerateYear> GetMonth()
+        {
+            List<GenerateYear> monthList = new List<GenerateYear>();
+            for (int month = 1; month <= 12; month++ )
+            {
+                string name = DateTimeFormatInfo.CurrentInfo.GetMonthName(month);
+                monthList.Add(new GenerateYear { Month = month, monthId = month, MonthName = name });
+            }
+            return monthList;
+        }
+    }
 
 
 
@@ -63,6 +113,7 @@ namespace ReservationSyste.ViewModels
         }
     }
 
+    
 
     public class ButlerService
     {
@@ -92,4 +143,25 @@ namespace ReservationSyste.ViewModels
             };
         }
     }
+
+   
+    public class Product
+    {
+        public int Id { get; set; }
+        public string ProductName { get; set; }
+        public bool IsAvalable { get; set; }
+
+        public static List<Product> GetProducts()
+        {
+            return new List<Product>
+            {
+                new Product{Id = 1, ProductName = "Shoes", IsAvalable= true},
+                new Product{Id = 2, ProductName = "SmartTV", IsAvalable= false},
+                new Product{Id = 3, ProductName = "Phone", IsAvalable= true},
+                new Product{Id = 4, ProductName = "Car", IsAvalable= false},
+                new Product{Id = 5, ProductName = "Laptop", IsAvalable= true},
+            };
+        }
+    }
+
 }

@@ -1,0 +1,24 @@
+﻿
+@model VendorVM
+@{
+    //Layout = "_Layout";
+    Layout = "_AdminLte";
+}
+
+<div class="container">
+    <div class="row mt-5 ml-5">
+        <form asp-action="Vendor" asp-controller="Vendor"  enctype="multipart/form-data">
+            <div class="input-group">
+                <div class="custom-file">
+                    <input asp-for="@Model.ExcleFile" class="custom-file-input" id="validatedInputGroupCustomFile" required>
+                    <label class="custom-file-label"   for="validatedInputGroupCustomFile">Choose file...</label>
+                </div>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">Save</button>
+                </div>
+            </div>
+        </form>
+        <div class="col-sm-6"></div>
+    </div>
+</div>
+

@@ -41,12 +41,34 @@ namespace ReservationSyste.Controllers
             Paystack = new PayStackApi(token);
         }
 
-        public IActionResult CreateReservation() =>
-                 View(new ReservationVM { AllowSmoking = AllowSmoking.GetAllowSmokings(), ButlerServices = ButlerService.GetButlerServices(), AirConditions = AirCondition.GetAirConditions(), });
+        public IActionResult CreateReservation()
+        {
+            ViewBag.Employees = Product.GetProducts();
+            TempData.Keep("noble");
+            return View(new ReservationVM
+            {
+                AllowSmoking = AllowSmoking.GetAllowSmokings(),
+                ButlerServices = ButlerService.GetButlerServices(),
+                AirConditions = AirCondition.GetAirConditions(),
+                YearListRange = GenerateYear.GetYear(),
+                MonthListRange = GenerateYear.GetMonth()
+            }) ;
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateReservation(ReservationVM reservationVM)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(new ReservationVM
+                {
+                    AllowSmoking = AllowSmoking.GetAllowSmokings(),
+                    ButlerServices = ButlerService.GetButlerServices(),
+                    AirConditions = AirCondition.GetAirConditions(),
+                    YearListRange = GenerateYear.GetYear(),
+                    MonthListRange = GenerateYear.GetMonth()
+                });
+            }
             if (ModelState.IsValid)
             {
                 string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images");
@@ -77,6 +99,7 @@ namespace ReservationSyste.Controllers
                     };
 
                     var result = await _reservationService.CreateReservationAsync(reservation);
+                   // reservationVM.YearListRange = GenerateYear.GetYear();
                     if (result > 0)
                     {
                         //ReservationVM rvm = new ReservationVM
@@ -480,9 +503,15 @@ namespace ReservationSyste.Controllers
             return rand.Next(100000000, 999999999);
         }
 
-    }
+        public JsonResult SaveProducts(string selectedProducts)
+        {
+            var productList = selectedProducts.Split(',');
+            return Json("", productList);
+        }
+     }
 
 }
+
 
 
 

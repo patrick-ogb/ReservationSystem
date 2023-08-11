@@ -2,6 +2,7 @@ using Hangfire;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using OfficeOpenXml;
 using ReservationSyste.Data;
 using ReservationSyste.Services.Interfices;
 using ReservationSyste.Services.Repository;
@@ -31,6 +32,8 @@ builder.Services.AddSession(option =>
 });
 
 builder.Services.AddScoped<IReservationService, ReservationService>();
+
+ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // Or LicenseContext.Commercial
 
 //CONFIGURE BACKGROUNDSERVICE
 //builder.Services.AddHostedService<BackgroundWorkerService>();

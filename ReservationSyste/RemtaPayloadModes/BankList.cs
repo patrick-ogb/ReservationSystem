@@ -67,8 +67,8 @@
         public static int Generate()
         {
             Random rand = new Random((int)DateTime.Now.Ticks);
-            var tricks = DateTime.Now.Ticks;
-            var random = rand.Next(100000000, 999999999);
+            // var tricks = DateTime.Now.Ticks;
+           // var random = rand.Next(100000000, 999999999);
             return rand.Next(100000000, 999999999);
         }
         public static RemitalBulkPayload GetRemitalBulkPayloads()
@@ -138,3 +138,10 @@
 
 
 }
+
+
+//AuthorizationId
+//    BeneficiaryPaymentStatus
+//    BeneficiaryStatusMessage
+//    FeeAmount
+//    PaymentStatus

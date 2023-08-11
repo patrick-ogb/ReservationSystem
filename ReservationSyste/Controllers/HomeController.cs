@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using ReservationSyste.Models;
 using ReservationSyste.Services.Interfices;
+using ReservationSyste.ViewModels;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -31,10 +33,11 @@ namespace ReservationSyste.Controllers
             {
                 reservations= await _reservationService.GetAllReservationAsync();
              }
-           
 
+            TempData["noble"] = "Sir Noble";
+            TempData.Keep("noble");
             ViewBag.ReservationVM = new ReservationModel {Reservations = reservations };
-
+            BasicNotification("Geetings", NotificationType.Success, "Completed Successfully!");
             return View(new DateClass());
         }
 
@@ -62,12 +65,47 @@ namespace ReservationSyste.Controllers
             return PartialView("_CheckInOut", new DateClass { Id = Convert.ToInt32(SessionValue.Split("!!!")[0]), ImagePath = SessionValue.Split("!!!")[1] });
         }
 
-        public JsonResult CheckInOutJSon(int ReservationId, string ImageUrl) => Json(JsonSerializer.Serialize<DateClass>(new DateClass { Id = ReservationId, ImagePath = ImageUrl }));
+        public JsonResult CheckInOutJSon(int ReservationId, string ImageUrl) => Json(System.Text.Json.JsonSerializer.Serialize<DateClass>(new DateClass { Id = ReservationId, ImagePath = ImageUrl }));
       
         public ActionResult Adminlte()
         {
             return View();
         }
+
+        public ActionResult ChartGraph()
+        {
+            
+            ChartDataViewModel vm = new ChartDataViewModel();
+            var vmJsonObj = JsonConvert.SerializeObject(ChartData.GetChartDatas());
+
+            ChartData chartData = new ChartData();
+            
+            return View(chartData);
+        }
+
+
+
+
+        class DBData
+        {
+            public Data[] Data { get; set; } // Data is an array of data rows.
+        }
+
+        class Data
+        {
+            [JsonProperty("Comments")]   // <- Mind that these are redundant.
+            public string Comments { get; set; } // <- Also mind, the props should be of type string
+
+            [JsonProperty("TimeStamp")]
+            public string TimeStamp { get; set; }
+
+            [JsonProperty("UserName")]
+            public string UserName { get; set; }
+        }
+
+
+
+
 
     }
 }

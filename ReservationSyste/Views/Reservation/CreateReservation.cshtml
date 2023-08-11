@@ -5,166 +5,290 @@
     Layout = "_AdminLte";
 }
 
+@{
+    List<Product> products;
 
+    products= (List<Product>)ViewBag.Employees;
+    if(products == null)
+    {
+        products = Product.GetProducts();
+    }
+
+    var name = TempData["noble"];
+}
 
 <div class="card shadow-lg">
     <style>
         #changeOpacity {
             opacity: 100 !important;
         }
-        #setup{
+
+        #setup {
             box-shadow: 1px 5px 10px #222;
         }
 
         #cardHeader {
             box-shadow: 1px 5px 10px #222;
-            padding:10px;
+            padding: 10px;
             background-color: #f2f2ee;
-            color:blue;
+            color: blue;
         }
     </style>
-    <h5 class="card-header"><span id="cardHeader">Setup new room</span> 
+    <h1>@name</h1>
+    <h5 class="card-header">
+        <span id="cardHeader">Setup new room</span>
     </h5>
-    <div class="card-body p-5 ml-5 mb-3 mr-5" id="setup">
-        <form asp-action="CreateReservation" asp-controller="Reservation" enctype="multipart/form-data">
+    <div class="container">
+                    <form asp-action="CreateReservation" asp-controller="Reservation" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="card-body p-5 ml-5 mb-3 mr-5" id="setup">
 
-            <div class="form-group row pb-2">
-                <div class="col-sm-3">
-                    <label asp-for="@Model.Name" class="col-form-label"></label>
-                </div>
-                <div class="col-sm-9">
-                    <input asp-for="@Model.Name" class="form-control" />
-                    <span asp-validation-for="@Model.Name" class="text-danger"></span>
-                </div>
-            </div>
-
-            <div class="form-group row pb-2">
-                <div class="col-sm-3">
-                    <label asp-for="@Model.Content" class="col-form-label"></label>
-                </div>
-                <div class="col-sm-9">
-                    <input asp-for="@Model.Content" class="form-control" />
-                    <span asp-validation-for="@Model.Content" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group row pb-2">
-                <div class="col-sm-3">
-                    <label asp-for="@Model.LeavingDate" class="col-form-label"></label>
-                </div>
-                <div class="col-sm-9">
-                    @*<input asp-for="@Model.LeavingDate" class="form-control" />*@
-                    <input type="text" id="LeavingDate" name="LeavingDate" value="@Model.LeavingDate.ToString("yyyy/MM/dd")" class="datepicker form-control" />
-                    <span asp-validation-for="@Model.LeavingDate" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group row pb-2">
-                <div class="col-sm-3">
-                    <label asp-for="@Model.Price" class="col-form-label"></label>
-                </div>
-                <div class="col-sm-9">
-                    <input asp-for="@Model.Price" class="form-control" />
-                    <span asp-validation-for="@Model.Price" class="text-danger"></span>
-                </div>
-            </div>
-
-            <div class="form-group row pb-3">
-                <div class="col-sm-3">
-                    <label asp-for="@Model.RoomCount" class="col-form-label"></label>
-                </div>
-                <div class="col-sm-9">
-                    <input asp-for="@Model.RoomCount" class="form-control" />
-                    <span asp-validation-for="@Model.RoomCount" class="text-danger"></span>
-                </div>
-            </div>
-            
-            
-
-            <div class="form-group row pb-2">
-                <div class="col-sm-3">
-                    <label asp-for="@Model.SmokingAllowed" class="col-form-label"></label>
-                </div>
-                <div class="col-sm-9">
-                    @*<input asp-for="Employee.Salary" class="form-control" />*@
-                    <select asp-for="@Model.SmokingAllowed" asp-items="@(new SelectList(Model.AllowSmoking, "SmokingStatus", "SmokingStatus"))"
-                            class="form-control">
-                        <option selected disabled>Select Smoking</option>
-                    </select>
-                    <span asp-validation-for="@Model.AllowSmoking" class="text-danger"></span>
-                </div>
-            </div>
-            
-            <div class="form-group row pb-2">
-                <div class="col-sm-3">
-                    <label asp-for="@Model.ButlerServiceAvailable" class="col-form-label"></label>
-                </div>
-                <div class="col-sm-9">
-                    @*<input asp-for="Employee.Salary" class="form-control" />*@
-                    <select asp-for="@Model.ButlerServiceAvailable" asp-items="@(new SelectList(Model.ButlerServices, "ButlerServiceAv", "ButlerServiceAv"))"
-                            class="form-control">
-                        <option selected disabled>Select Butler Service</option>
-                    </select>
-                    <span asp-validation-for="@Model.ButlerServiceAvailable" class="text-danger"></span>
-                </div>
-            </div>
-
-            <div class="form-group row pb-2">
-                <div class="col-sm-3">
-                    <label asp-for="@Model.AirConditioning" class="col-form-label"></label>
-                </div>
-                <div class="col-sm-9">
-                    @*<input asp-for="Employee.Salary" class="form-control" />*@
-                    <select asp-for="@Model.AirConditioning" asp-items="@(new SelectList(Model.AirConditions, "AirConditioningAv", "AirConditioningAv"))"
-                            class="form-control">
-                        <option selected disabled>Select AirConditioning</option>
-                    </select>
-                    <span asp-validation-for="@Model.AirConditioning" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group row pb-2">
-                <div class="col-sm-3">
-                    <label asp-for="@Model.Image" class="col-form-label"></label>
-                </div>
-                <div class="col-sm-9">
-                    <div class="custom-file">
-                        <input asp-for="@Model.Image" id="changeOpacity" class="form-control custom-file-input" />
-                    </div>
-                </div>
-            </div>
-
-            
-
-            <div class="form-group row pb-2 pt-2">
-                    <div class="col-sm-3"></div>
-                    <div class="col-sm-3">
-                        <div class="custom-file">
-                            <button type="submit" class="btn btn-success float-end">Submit</button>
+                        <div class="form-group row pb-2">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.Name" class="col-form-label"></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input asp-for="@Model.Name" class="form-control" />
+                                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                            </div>
                         </div>
-                    </div>
-            </div>
 
-            @section Script{
-                @*CODE FOR UPLOAD SINGLE FILE TO WWWROOT/IMAGES FOLDER ON THE SERVER*@
-                <script>
-                    $(document).ready(function () {
-                        $('.custom-file-input').on("change", function () {
-                            var fileName = $(this).val().split("\\").pop();
-                            $(this).next('.custom-file-label').html(fileName);
-                        });
-                    });
+                        <div class="form-group row pb-2">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.Content" class="col-form-label"></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input asp-for="@Model.Content" class="form-control" />
+                                <span asp-validation-for="@Model.Content" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row pb-2">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.TestDate" class="col-form-label"></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input asp-for="@Model.TestDate" class="form-control" />
+                                <span asp-validation-for="@Model.TestDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row pb-2">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.LeavingDate" class="col-form-label"></label>
+                            </div>
+                            <div class="col-sm-9">
+                                @*<input asp-for="@Model.LeavingDate" class="form-control" />*@
+                                <input type="text" id="LeavingDate" name="LeavingDate" value="@Model.LeavingDate.ToString("yyyy/MM/dd")" class="datepicker form-control" />
+                                <span asp-validation-for="@Model.LeavingDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row pb-2">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.Price" class="col-form-label"></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input asp-for="@Model.Price" class="form-control" />
+                                <span asp-validation-for="@Model.Price" class="text-danger"></span>
+                            </div>
+                        </div>
 
-                    $(function(){
-                        $('.datepicker').datepicker({
-                                    changeYear: true,
-                                 changeMonth: true,
-                                    yearRange: "-100:+0",
-                        });
-                    });
+                        <div class="form-group row pb-3">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.RoomCount" class="col-form-label"></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input asp-for="@Model.RoomCount" class="form-control" />
+                                <span asp-validation-for="@Model.RoomCount" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row pb-2">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.SmokingAllowed" class="col-form-label"></label>
+                            </div>
+                            <div class="col-sm-9">
+                                @*<input asp-for="Employee.Salary" class="form-control" />*@
+                                <select asp-for="@Model.SmokingAllowed" asp-items="@(new SelectList(Model.AllowSmoking, "SmokingStatus", "SmokingStatus"))"
+                                        class="form-control">
+                                    <option selected disabled>Select Smoking</option>
+                                </select>
+                                <span asp-validation-for="@Model.AllowSmoking" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row pb-2">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.ButlerServiceAvailable" class="col-form-label"></label>
+                            </div>
+                            <div class="col-sm-9">
+                                @*<input asp-for="Employee.Salary" class="form-control" />*@
+                                <select asp-for="@Model.ButlerServiceAvailable" asp-items="@(new SelectList(Model.ButlerServices, "ButlerServiceAv", "ButlerServiceAv"))"
+                                        class="form-control">
+                                    <option selected disabled>Select Butler Service</option>
+                                </select>
+                                <span asp-validation-for="@Model.ButlerServiceAvailable" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row pb-2">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.AirConditioning" class="col-form-label"></label>
+                            </div>
+                            <div class="col-sm-9">
+                                @*<input asp-for="Employee.Salary" class="form-control" />*@
+                                <select asp-for="@Model.AirConditioning" asp-items="@(new SelectList(Model.AirConditions, "AirConditioningAv", "AirConditioningAv"))"
+                                        class="form-control">
+                                    <option selected disabled>Select AirConditioning</option>
+                                </select>
+                                <span asp-validation-for="@Model.AirConditioning" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row pb-2">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.Year" class="col-form-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <select asp-for="@Model.Year" asp-items="@(new SelectList(Model.YearListRange, "Year", "Year"))"
+                                        class="form-control">
+                                    <option selected disabled>Select Year</option>
+                                </select>
+                                <span asp-validation-for="@Model.Year" class="text-danger"></span>
+                            </div>
+
+
+                            <div class="col-sm-4">
+                                <select asp-for="@Model.Month" asp-items="@(new SelectList(Model.MonthListRange, "Month", "MonthName"))"
+                                        class="form-control">
+                                    <option selected disabled>Select Month</option>
+                                </select>
+                                <span asp-validation-for="@Model.Month" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row pb-2">
+                            <div class="col-sm-3">
+                                <label asp-for="@Model.Image" class="col-form-label"></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="custom-file">
+                                    <input asp-for="@Model.Image" id="changeOpacity" class="form-control custom-file-input" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row pb-2 pt-2">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-3">
+                                <div class="custom-file">
+                                    <button type="submit" class="btn btn-success float-end">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+
 
                    
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <ul class="list-group" id="productList">
+                    @foreach (var product in products)
+                    {
+                        string checkBoxId = "productCheckBox_" + product.Id.ToString();
+                        <li class="list-group-item">
+                            <div class="checkbox">
+                                <input type="checkbox" id="Check_@product.Id" checked="@product.IsAvalable">
+                                <label for="Check_@product.Id">@product.ProductName</label>
+                                <input type="checkbox" id="@checkBoxId" onclick="getChecked('@product.Id')" />
+                            </div>
+                        </li>
+                    }
 
-                </script>
-
-            }
-            </form>
+                    <li class="list-group-item ">
+                        <a class="btn btn-success btn-block" onclick="SaveProduct()">Update</a>
+                    </li>
+                </ul>
+                <input type="hidden" asp-for="ProductId" id="ProductId" />
+                <div id="productIdList"></div>
+            </div>
         </div>
+        </form>
     </div>
+</div>
+
+
+
+@section Script{
+    @*CODE FOR UPLOAD SINGLE FILE TO WWWROOT/IMAGES FOLDER ON THE SERVER*@
+    <script>
+        $(document).ready(function () {
+            $('.custom-file-input').on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next('.custom-file-label').html(fileName);
+            });
+        });
+
+        $(function () {
+            $('.datepicker').datepicker({
+                changeYear: true,
+                changeMonth: true,
+                yearRange: "-100:+0",
+            });
+        });
+    </script>
+ }
+
+
+
+ $.noConflict();
+<script>
+    var SaveProduct = function () {
+        var productArr = [];
+        var commaSeperatedIds = "";
+        jQuery("#productList li input[type=checkbox]").each(function (index, val) {
+            var chechId = jQuery(val).attr("Id");
+            var arr = chechId.split('_');
+            var currentCheckboxId = arr[1];
+            var ischecked = jQuery("#" + chechId).is(":checked", true);
+            if (ischecked) {
+                productArr.push(currentCheckboxId);
+                commaSeperatedIds = productArr.toString();
+            }
+        });
+        if (productArr.length > 0) {
+            jQuery(function () {
+                $.ajax({
+                    url: "/Reservation/SaveProducts",
+                    type: "POST",
+                    data: { selectedProducts: commaSeperatedIds },
+                    success: function (response) {
+                        console.log(response);
+                    }
+                })
+            })
+        }
+
+    }
+</script>
+
+
+
+
+<script>
+    let productIds = [];
+    function getChecked(producId) {
+        let checkboxId = "productCheckBox_" + producId;
+        let checkbox = document.getElementById(checkboxId);
+
+        if (checkbox.checked) {
+            let serviceObj = { producId};
+            productIds.push(serviceObj);
+            console.log(productIds);
+        }
+        else {
+            let index = serviceIds.findIndex((O) => O.serviceId == producId);
+            serviceIds.splice(index, 1);
+        }
+       
+        document.getElementById("ProductId").value = JSON.stringify(productIds);
+    }
+</script>

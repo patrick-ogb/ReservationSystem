@@ -7,6 +7,8 @@
             </tr>
         </thead>
         <tbody>
+            @if(Model is not null)
+            {
             @foreach(var vendor in Model)
             {
                 <tr>
@@ -14,6 +16,7 @@
                     <td>@vendor.regionCode</td>
                     <td>@vendor.regionName</td>
                 </tr>
+            }
             }
             
         </tbody>
